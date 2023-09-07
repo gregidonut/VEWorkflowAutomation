@@ -28,17 +28,28 @@
 
 # September 7, 2023(today)
 
-- [ ] breakdown business logic steps to be used as pseudo-code
-  - [x] broke down step 1 as is necessary to complete a simple function
-  - [ ] break down step 2 (splitting the video)
-  - [ ] break down the rest of the steps
 - [x] start implementing the simplest function to get the ball rolling
-  - [image in discord](https://cdn.discordapp.com/attachments/1148476116097581118/1149312773877141515/Screenshot_2023-09-07_19-50-10.png)
+    - [image in discord](https://cdn.discordapp.com/attachments/1148476116097581118/1149312773877141515/Screenshot_2023-09-07_19-50-10.png)
 
-**frontlog:**
+**backlog:**
 
+- [ ] breakdown business logic steps to be used as pseudo-code
+    - [x] break down step 1 as is necessary to complete a simple function
+    - [ ] break down step 2 (splitting the video)
+    - [ ] break down the rest of the steps
 - [ ] outline requirements for larger scale deployment
     - [ ] research serverless docker instances
 
 ## commits
+
+[ ff50ce5 ](https://github.com/gregidonut/VEWorkflowAutomation/commit/ff50ce54b231efe2aa93291f34a8fac7f5b2b0f3)..
+[ 1c14866 ](https://github.com/gregidonut/VEWorkflowAutomation/commit/1c148660562eee71d9e5d36774b72e0469b8ebb6)
+
+# September 8, 2023(tomorrow)
+
+- [ ] breakdown business logic steps to be used as pseudo-code
+    - [ ] break down step 2 (splitting the video)
+    - [ ] break down the rest of the steps
+- [ ] outline requirements for larger scale deployment
+    - [ ] research serverless docker instances
 
