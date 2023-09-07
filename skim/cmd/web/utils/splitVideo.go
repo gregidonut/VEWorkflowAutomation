@@ -3,13 +3,17 @@ package utils
 import (
 	"bufio"
 	"fmt"
+	"io/fs"
 	"os"
 	"os/exec"
+	"path/filepath"
+	"strings"
 	"sync"
 )
 
 const (
-	SPLITVIDS_REL_PATH = "../../../uploads/splitVids"
+	SPLITVIDS_REL_PATH = "./skim/uploads/splitVids"
+	UPLOADS_REL_PATH   = "./skim/uploads"
 )
 
 func SplitVideo() error {
@@ -17,15 +21,33 @@ func SplitVideo() error {
 
 	_, err := os.Stat(SPLITVIDS_REL_PATH)
 	if os.IsNotExist(err) {
-		mkdirCmd := exec.Command("mkdir", SPLITVIDS_REL_PATH)
+		mkdirCmd := exec.Command("mkdir", "splitVids")
+		mkdirCmd.Dir = UPLOADS_REL_PATH
 		mkdirCmd.Run()
 	}
+
+	fmt.Println("created splitVidDir")
+
+	var uploadedFileName string
+	filepath.Walk(UPLOADS_REL_PATH, func(path string, info fs.FileInfo, err error) error {
+		if info.IsDir() {
+			return nil
+		}
+		if strings.Contains(path, "splitVids") {
+			return nil
+		}
+
+		uploadedFileName = filepath.Base(path)
+		return nil
+	})
+
+	fmt.Printf("uploaded filename: %q\n", uploadedFileName)
 
 	//{{
 	ffmpegCmd := exec.Command(
 		"ffmpeg",
 		"-i",
-		"krombopulos_michael.mp4",
+		uploadedFileName,
 		"-c:v",
 		"libx264",
 		"-crf",
@@ -46,7 +68,7 @@ func SplitVideo() error {
 		"segment",
 		"splitVids/output%03d.mp4",
 	)
-	ffmpegCmd.Dir = "../../../uploads"
+	ffmpegCmd.Dir = UPLOADS_REL_PATH
 
 	stdout, err := ffmpegCmd.StdoutPipe()
 	if err != nil {
