@@ -30,6 +30,7 @@
 
 - [ ] breakdown business logic steps to be used as pseudo-code
   - [x] broke down step 1 as is necessary to complete a simple function
+  - [ ] break down step 2 (splitting the video)
   - [ ] break down the rest of the steps
 - [x] start implementing the simplest function to get the ball rolling
   - [image in discord](https://cdn.discordapp.com/attachments/1148476116097581118/1149312773877141515/Screenshot_2023-09-07_19-50-10.png)
