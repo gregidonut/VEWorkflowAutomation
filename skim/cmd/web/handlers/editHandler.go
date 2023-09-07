@@ -1,17 +1,12 @@
-package main
+package handlers
 
 import (
 	"html/template"
-	"log"
 	"net/http"
 )
 
-const (
-	INDEX_PAGE_PATH = "skim/ui/html/pages/index.html"
-)
-
-func index(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" {
+func Edit(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/edit" {
 		http.NotFound(w, r)
 		return
 	}
@@ -19,10 +14,9 @@ func index(w http.ResponseWriter, r *http.Request) {
 	// template set. If there's an error, we log the detailed error message and use
 	// the http.Error() function to send a generic 500 Internal Server Error
 	// response to the user.
-	ts, err := template.ParseFiles(INDEX_PAGE_PATH)
+	ts, err := template.ParseFiles(EDIT_PAGE_PATH)
 	if err != nil {
-		log.Println(err.Error())
-		http.Error(w, "Internal Server Error", 500)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	// We then use the Execute() method on the template set to write the
@@ -31,7 +25,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 	// leave as nil.
 	err = ts.Execute(w, nil)
 	if err != nil {
-		log.Println(err.Error())
-		http.Error(w, "Internal Server Error", 500)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
