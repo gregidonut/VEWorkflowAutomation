@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"html/template"
 	"io"
 	"net/http"
 	"os"
@@ -51,19 +50,5 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//fmt.Fprintf(w, "File uploaded successfully to: %s", filepath.Join(uploadDir, handler.Filename))
-	ts, err := template.ParseFiles(EDIT_PAGE_PATH)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	// We then use the Execute() method on the template set to write the
-	// template content as the response body. The last parameter to Execute()
-	// represents any dynamic data that we want to pass in, which for now we'll
-	// leave as nil.
-	err = ts.Execute(w, nil)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	http.Redirect(w, r, "/edit", http.StatusSeeOther)
 }
