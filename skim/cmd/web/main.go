@@ -14,7 +14,7 @@ const (
 func main() {
 	mux := http.NewServeMux()
 
-	fileServer := http.FileServer(http.Dir(paths.STATIC_DIR_PATH))
+	fileServer := http.FileServer(http.Dir(paths.STATIC_REL_PATH))
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
 	mux.HandleFunc("/", handlers.Index)

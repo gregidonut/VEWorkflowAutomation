@@ -16,8 +16,13 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 
 	_, err := os.Stat(paths.UPLOADS_PATH)
 	if os.IsNotExist(err) {
-		http.Error(w, "directory does not exist", http.StatusInternalServerError)
+		http.Error(w, "uploads directory does not exist", http.StatusInternalServerError)
 		return
+	}
+
+	_, err = os.Stat(paths.SPLITVIDS_REL_PATH)
+	if err == nil {
+		goto afterSplitting
 	}
 
 	if err = utils.SplitVideo(); err != nil {
@@ -25,6 +30,7 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+afterSplitting:
 	files := []string{
 		"./skim/ui/html/base.html",
 		"./skim/ui/html/pages/edit.html",
