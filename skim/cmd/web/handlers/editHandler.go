@@ -24,13 +24,18 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ts, err := template.ParseFiles(EDIT_PAGE_PATH)
+	files := []string{
+		"./skim/ui/html/base.html",
+		"./skim/ui/html/pages/edit.html",
+	}
+
+	ts, err := template.ParseFiles(files...)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	err = ts.Execute(w, nil)
+	err = ts.ExecuteTemplate(w, "base", nil)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
