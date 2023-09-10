@@ -3,6 +3,7 @@ package utils
 import (
 	"bufio"
 	"fmt"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"io/fs"
 	"os"
 	"os/exec"
@@ -11,24 +12,19 @@ import (
 	"sync"
 )
 
-const (
-	SPLITVIDS_REL_PATH = "./skim/uploads/splitVids"
-	UPLOADS_REL_PATH   = "./skim/uploads"
-)
-
 func SplitVideo() error {
 
-	_, err := os.Stat(SPLITVIDS_REL_PATH)
+	_, err := os.Stat(paths.SPLITVIDS_REL_PATH)
 	if os.IsNotExist(err) {
 		mkdirCmd := exec.Command("mkdir", "splitVids")
-		mkdirCmd.Dir = UPLOADS_REL_PATH
+		mkdirCmd.Dir = paths.UPLOADS_PATH
 		mkdirCmd.Run()
 	}
 
 	fmt.Println("created splitVidDir")
 
 	var uploadedFileName string
-	filepath.Walk(UPLOADS_REL_PATH, func(path string, info fs.FileInfo, err error) error {
+	filepath.Walk(paths.UPLOADS_PATH, func(path string, info fs.FileInfo, err error) error {
 		if info.IsDir() {
 			return nil
 		}
@@ -81,7 +77,10 @@ func SplitVideo() error {
 		`expr:gte(t,n_forced*1)`,
 		"-f",
 		"segment",
-		"splitVids/output%03d.mp4",
+		fmt.Sprintf(
+			"splitVids/%s",
+			strings.TrimSuffix(uploadedFileName, filepath.Ext(uploadedFileName)),
+		)+"_part_%04d.mp4",
 	)
 
 	err = runCmd(splitCmd)
@@ -95,7 +94,7 @@ func SplitVideo() error {
 func runCmd(cmd *exec.Cmd) error {
 	wg := sync.WaitGroup{}
 
-	cmd.Dir = UPLOADS_REL_PATH
+	cmd.Dir = paths.UPLOADS_PATH
 
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {

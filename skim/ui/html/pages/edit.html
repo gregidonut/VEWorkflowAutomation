@@ -1,62 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>skim - edit</title>
-    <style>
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: inherit;
-        }
-
-        html {
-            box-sizing: border-box;
-            font-size: 62.5%;
-        }
-
-        body {
-            font-family: sans-serif;
-            font-size: 5rem;
-            line-height: 1.6;
-
-            background: grey;
-
-            height: 100svh;
-            padding: 3rem;
-
-            display: flex;
-            flex-direction: column;
-
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        h1, h2, h3, h4, h5 {
-            color: antiquewhite;
-        }
-    </style>
-
-</head>
-<body>
-<header>
-    <h1>Skim</h1>
-</header>
+{{define "title"}}edit{{end}}
+{{define "main"}}
 <style>
-    main {
-        flex-grow: 1;
-        border: antiquewhite solid 1rem;
-        width: 100%;
-
+    .vid-files-list {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        flex-direction: row;
+        gap: 1rem;
+        overflow-x: auto;
+
+        list-style: none;
     }
 </style>
-<main>
-
-</main>
-</body>
-</html>
+<ul class="vid-files-list">
+    {{range .SplitVidFilePaths}}
+    <li>
+        <video
+                width="320"
+                height="240"
+                controls
+                autoplay
+                loop
+                muted
+        >
+            <source src="{{.}}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </li>
+    {{end}}
+</ul>
+{{end}}

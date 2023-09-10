@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"io"
 	"net/http"
 	"os"
@@ -15,7 +16,6 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Get the file from the request
 	file, handler, err := r.FormFile("filename")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -23,8 +23,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	// Specify the directory where you want to save the uploaded files
-	uploadDir := "./skim/uploads" // Change this to your desired directory
+	uploadDir := paths.UPLOADS_PATH
 
 	// Ensure the directory exists, create it if necessary
 	if _, err := os.Stat(uploadDir); os.IsNotExist(err) {

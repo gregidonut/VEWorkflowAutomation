@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/handlers"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"log"
 	"net/http"
 )
@@ -12,6 +13,10 @@ const (
 
 func main() {
 	mux := http.NewServeMux()
+
+	fileServer := http.FileServer(http.Dir(paths.STATIC_REL_PATH))
+	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
+
 	mux.HandleFunc("/", handlers.Index)
 	mux.HandleFunc("/upload", handlers.UploadFile)
 	mux.HandleFunc("/edit", handlers.Edit)
