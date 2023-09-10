@@ -17,12 +17,15 @@ Is a web app that outputs "AI-Generated" video synopsis from movies.
     - [x] add logic that executes the `ffmpeg` command to **split** the video file
       uploaded into several 1 second chunks
 3. a list of the movie files in correct sequential order is available(styles to make it intuitive
-   is key here) from the gui
-   **CURRENTLY BEING IMPLEMENTED**:
-    - [ ] loop through the files in the uploaded video-split directory and display them in gui
+   is key here) from the gui  
+    - [x] loop through the files in the uploaded video-split directory and display them in gui
         - [x] introduce templates for looping syntax
         - [x] introduce static files to be able to loop through available files securely
-4. select the 5-second videos to be included in the output
+4. select the 5-second videos to be included in the output  
+   **CURRENTLY BEING IMPLEMENTED**:
+    - [ ] implement a system using javascript & css that highlights selected list items for a 
+    5-second vid
+    - [ ] a button that determines whether the user is ready to submit the selected list items
 5. each time you select a video you are prompted to type in a synopsis of the 5-second video.
 6. from here we branch out into several output-specifications(TODO: IMPLEMENT)
 
