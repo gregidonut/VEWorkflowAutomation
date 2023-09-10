@@ -17,7 +17,6 @@ const (
 )
 
 func SplitVideo() error {
-	wg := sync.WaitGroup{}
 
 	_, err := os.Stat(SPLITVIDS_REL_PATH)
 	if os.IsNotExist(err) {
@@ -43,11 +42,27 @@ func SplitVideo() error {
 
 	fmt.Printf("uploaded filename: %q\n", uploadedFileName)
 
-	//{{
-	ffmpegCmd := exec.Command(
+	removeAudio := exec.Command(
 		"ffmpeg",
 		"-i",
 		uploadedFileName,
+		"-c:v",
+		"copy",
+		"-an",
+		"-crf",
+		"22",
+		fmt.Sprintf("%s_no_sound.mp4", strings.TrimSuffix(uploadedFileName, filepath.Ext(uploadedFileName))),
+	)
+
+	err = runCmd(removeAudio)
+	if err != nil {
+		return err
+	}
+
+	splitCmd := exec.Command(
+		"ffmpeg",
+		"-i",
+		fmt.Sprintf("%s_no_sound.mp4", strings.TrimSuffix(uploadedFileName, filepath.Ext(uploadedFileName))),
 		"-c:v",
 		"libx264",
 		"-crf",
@@ -68,9 +83,21 @@ func SplitVideo() error {
 		"segment",
 		"splitVids/output%03d.mp4",
 	)
-	ffmpegCmd.Dir = UPLOADS_REL_PATH
 
-	stdout, err := ffmpegCmd.StdoutPipe()
+	err = runCmd(splitCmd)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func runCmd(cmd *exec.Cmd) error {
+	wg := sync.WaitGroup{}
+
+	cmd.Dir = UPLOADS_REL_PATH
+
+	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		return err
 	}
@@ -86,7 +113,7 @@ func SplitVideo() error {
 		}
 	}()
 
-	stderr, err := ffmpegCmd.StderrPipe()
+	stderr, err := cmd.StderrPipe()
 	if err != nil {
 		return err
 	}
@@ -102,18 +129,16 @@ func SplitVideo() error {
 		}
 	}()
 
-	err = ffmpegCmd.Start()
+	err = cmd.Start()
 	if err != nil {
 		return err
 	}
 
-	err = ffmpegCmd.Wait()
+	err = cmd.Wait()
 	if err != nil {
 		return err
 	}
 
 	wg.Wait()
-	//}}
-
 	return nil
 }
