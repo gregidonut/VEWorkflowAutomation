@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
 	"html/template"
 	"net/http"
@@ -13,7 +14,7 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err := os.Stat(UPLOADS_PATH)
+	_, err := os.Stat(paths.UPLOADS_PATH)
 	if os.IsNotExist(err) {
 		http.Error(w, "directory does not exist", http.StatusInternalServerError)
 		return

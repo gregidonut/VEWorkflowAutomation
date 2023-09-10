@@ -1,13 +1,10 @@
 package handlers
 
 import (
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"html/template"
 	"net/http"
 	"os"
-)
-
-const (
-	UPLOADS_DIR = "./skim/uploads"
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
@@ -16,9 +13,9 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err := os.Stat(UPLOADS_DIR)
+	_, err := os.Stat(paths.UPLOADS_PATH)
 	if !os.IsNotExist(err) {
-		err = os.RemoveAll(UPLOADS_DIR)
+		err = os.RemoveAll(paths.UPLOADS_PATH)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
