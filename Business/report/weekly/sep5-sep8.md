@@ -56,3 +56,5 @@
     - [ ] research serverless docker instances
 
 ## commits
+[ 8be8864 ](https://github.com/gregidonut/VEWorkflowAutomation/commit/8be88647ca5c7fc893025b249f1eb298db5b9fe8)..
+[ 9cd3494 ](https://github.com/gregidonut/VEWorkflowAutomation/commit/9cd349458f5d3398812fdffd40aeff003d540a21)
