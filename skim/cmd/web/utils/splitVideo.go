@@ -77,7 +77,10 @@ func SplitVideo() error {
 		`expr:gte(t,n_forced*1)`,
 		"-f",
 		"segment",
-		"splitVids/output%03d.mp4",
+		fmt.Sprintf(
+			"splitVids/%s",
+			strings.TrimSuffix(uploadedFileName, filepath.Ext(uploadedFileName)),
+		)+"_part_%04d.mp4",
 	)
 
 	err = runCmd(splitCmd)

@@ -13,6 +13,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.Header().Set("Clear-Site-Data", `"cache"`)
+
 	_, err := os.Stat(paths.UPLOADS_PATH)
 	if !os.IsNotExist(err) {
 		err = os.RemoveAll(paths.UPLOADS_PATH)
