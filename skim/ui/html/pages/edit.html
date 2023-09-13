@@ -6,50 +6,73 @@
         flex-direction: column;
         width: 100%;
         height: 100%;
+
+        padding-left: 10rem;
+        position: relative;
     }
 </style>
 <div class="edit-space">
     <style>
-        section.timeline {
+        section.initial-timeline {
             display: flex;
             flex-direction: column;
             overflow-x: auto;
         }
     </style>
-    <section class="timeline">
+    <section class="initial-timeline">
         <style>
-            .vid-files-list {
+            div ul.vid-files-list {
                 display: flex;
                 flex-direction: row;
                 gap: 1rem;
 
                 list-style: none;
             }
+
+            button.initial-timeline-select-btn {
+                width: min-content;
+                padding: 1rem;
+                font-size: 2rem;
+                margin-left: 1rem;
+                margin-top: 1rem;
+
+                position: absolute;
+                left: 0;
+            }
         </style>
-        <ul class="vid-files-list">
-            {{range .SplitVidFilePaths}}
-            <li>
-                <style>
-                    div.vid-wrapper {
-                        padding: 1rem;
-                        background: aqua;
-                    }
-                </style>
-                <div class="vid-wrapper">
-                    <video
-                            width="128"
-                            controls
-                            autoplay
-                            loop
-                            muted
-                    >
-                        <source src="{{.}}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-            </li>
-            {{end}}
-        </ul>
+        <div>
+            <ul class="vid-files-list">
+                {{range .SplitVidFilePaths}}
+                <li>
+                    <style>
+                        div.vid-wrapper {
+                            padding: 1rem;
+                            background: aqua;
+                        }
+                    </style>
+                    <div class="vid-wrapper">
+                        <video
+                                width="128"
+                                controls
+                                autoplay
+                                loop
+                                muted
+                        >
+                            <source src="{{.}}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </li>
+                {{end}}
+            </ul>
+        </div>
+        <button class="initial-timeline-select-btn">select</button>
+    </section>
+
+    <section class="committed-timeline">
+        <p>
+            committed timeline
+        </p>
     </section>
 
     <style>
@@ -60,26 +83,19 @@
             display: flex;
             flex-direction: column;
         }
-
-        section.scripting-space button {
-            width: min-content;
-            padding: 1rem;
-            font-size: 2rem;
-            margin-left: 1rem;
-            margin-top: 1rem;
-        }
     </style>
+
     <section class="scripting-space">
-        <button>select</button>
         <p>
             scripting space
         </p>
     </section>
 </div>
 <script type="text/javascript">
-    const colorBlue = "rgb(0, 0, 255)"
-    const colorAqua = "rgb(0, 255, 255)"
-    const colorGrey = "rgb(97, 97, 97)"
+    const COLOR_BLUE = "rgb(0, 0, 255)"
+    const COLOR_AQUA = "rgb(0, 255, 255)"
+    const COLOR_GREY = "rgb(97, 97, 97)"
+
     let isMouseDown = false;
     let selectedElements = [];
 
@@ -103,8 +119,8 @@
     });
 
     function toggleSelection(element) {
-        if (element.style.backgroundColor === colorBlue) {
-            element.style.backgroundColor = colorAqua;
+        if (element.style.backgroundColor === COLOR_BLUE) {
+            element.style.backgroundColor = COLOR_AQUA;
             const index = selectedElements.indexOf(element);
             if (index > -1) {
                 selectedElements.splice(index, 1);
@@ -116,14 +132,14 @@
             return
         }
 
-        element.style.backgroundColor = colorBlue;
+        element.style.backgroundColor = COLOR_BLUE;
         selectedElements.push(element);
     }
 
-    let button = document.querySelector("section.scripting-space button");
+    let button = document.querySelector("section.initial-timeline button.initial-timeline-select-btn");
     button.addEventListener("click", function () {
         selectedElements.forEach(function (e) {
-            e.style.backgroundColor = colorGrey;
+            e.style.backgroundColor = COLOR_GREY;
         });
         selectedElements.sort(function (a, b) {
             const srcA = a.querySelector("video source").getAttribute("src");
@@ -141,10 +157,10 @@
     });
 
     document.addEventListener("click", function (event) {
-        const timelineSection = document.querySelector("section.timeline");
+        const timelineSection = document.querySelector("section.initial-timeline");
         if (!timelineSection.contains(event.target)) {
             selectedElements.forEach(function (element) {
-                element.style.backgroundColor = colorAqua;
+                element.style.backgroundColor = COLOR_AQUA;
             });
             selectedElements = [];
         }
