@@ -29,17 +29,24 @@ func StitchOneSecondVideos(w http.ResponseWriter, r *http.Request) {
 		os.Mkdir(paths.WORKSPACE_REL_PATH, os.ModeDir|os.ModePerm)
 	}
 
+	if err = generateInputFile(vidPathsToStitch); err != nil {
+		http.Error(w, err.Error(), http.StatusMethodNotAllowed)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
+func generateInputFile(vidPathsToStitch []string) error {
 	files, err := os.ReadDir(paths.WORKSPACE_REL_PATH)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
+		return err
 	}
 
 	if len(files) < 1 {
 		f, err := os.Create(fmt.Sprintf("%s/0000input.txt", paths.WORKSPACE_REL_PATH))
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
+			return err
 		}
 		defer f.Close()
 
@@ -63,8 +70,7 @@ func StitchOneSecondVideos(w http.ResponseWriter, r *http.Request) {
 		fileNumber := lastFile[:4]
 		fileNumberAsInt, err := strconv.Atoi(fileNumber)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusBadRequest)
-			return
+			return err
 		}
 
 		fileNumberAsInt++
@@ -79,7 +85,7 @@ func StitchOneSecondVideos(w http.ResponseWriter, r *http.Request) {
 			pathAsLine := fmt.Sprintf("file '%s'", path) + "\n"
 			_, err := f.WriteString(pathAsLine)
 			if err != nil {
-				log.Fatal(err)
+				return err
 			}
 		}
 	}
@@ -89,5 +95,5 @@ func StitchOneSecondVideos(w http.ResponseWriter, r *http.Request) {
 		fmt.Printf("\t%s\n", file.Name())
 	}
 
-	w.WriteHeader(http.StatusOK)
+	return nil
 }
