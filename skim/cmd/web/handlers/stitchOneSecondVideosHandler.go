@@ -4,9 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
+	"io/fs"
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"sort"
 	"strconv"
 )
@@ -30,7 +33,12 @@ func StitchOneSecondVideos(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = generateInputFile(vidPathsToStitch); err != nil {
-		http.Error(w, err.Error(), http.StatusMethodNotAllowed)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err = utils.StitchVids(); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
@@ -38,10 +46,16 @@ func StitchOneSecondVideos(w http.ResponseWriter, r *http.Request) {
 }
 
 func generateInputFile(vidPathsToStitch []string) error {
-	files, err := os.ReadDir(paths.WORKSPACE_REL_PATH)
-	if err != nil {
-		return err
-	}
+	var files []string
+	filepath.Walk(paths.WORKSPACE_REL_PATH, func(path string, info fs.FileInfo, err error) error {
+		if info.IsDir() {
+			return nil
+		}
+
+		files = append(files, filepath.Base(path))
+
+		return nil
+	})
 
 	if len(files) < 1 {
 		f, err := os.Create(fmt.Sprintf("%s/0000input.txt", paths.WORKSPACE_REL_PATH))
@@ -51,7 +65,8 @@ func generateInputFile(vidPathsToStitch []string) error {
 		defer f.Close()
 
 		for _, path := range vidPathsToStitch {
-			pathAsLine := fmt.Sprintf("file '%s'", path) + "\n"
+			// called from workspace dir
+			pathAsLine := fmt.Sprintf("file '../splitVids/%s'", filepath.Base(path)) + "\n"
 			_, err := f.WriteString(pathAsLine)
 			if err != nil {
 				log.Fatal(err)
@@ -59,13 +74,8 @@ func generateInputFile(vidPathsToStitch []string) error {
 		}
 
 	} else {
-		var fileNames []string
-		for _, file := range files {
-			fileNames = append(fileNames, file.Name())
-		}
-
-		sort.Strings(fileNames)
-		lastFile := fileNames[len(fileNames)-1]
+		sort.Strings(files)
+		lastFile := files[len(files)-1]
 
 		fileNumber := lastFile[:4]
 		fileNumberAsInt, err := strconv.Atoi(fileNumber)
@@ -82,7 +92,8 @@ func generateInputFile(vidPathsToStitch []string) error {
 		defer f.Close()
 
 		for _, path := range vidPathsToStitch {
-			pathAsLine := fmt.Sprintf("file '%s'", path) + "\n"
+			// called from workspace dir
+			pathAsLine := fmt.Sprintf("file '../splitVids/%s'", filepath.Base(path)) + "\n"
 			_, err := f.WriteString(pathAsLine)
 			if err != nil {
 				return err
@@ -92,7 +103,7 @@ func generateInputFile(vidPathsToStitch []string) error {
 
 	fmt.Printf("files in %s\n", paths.WORKSPACE_REL_PATH)
 	for _, file := range files {
-		fmt.Printf("\t%s\n", file.Name())
+		fmt.Printf("\t%s\n", file)
 	}
 
 	return nil
