@@ -23,11 +23,9 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 
-	uploadDir := paths.UPLOADS_PATH
-
 	// Ensure the directory exists, create it if necessary
-	if _, err := os.Stat(uploadDir); os.IsNotExist(err) {
-		os.Mkdir(uploadDir, os.ModeDir|os.ModePerm)
+	if _, err := os.Stat(paths.UPLOADS_PATH); os.IsNotExist(err) {
+		os.Mkdir(paths.UPLOADS_PATH, os.ModeDir|os.ModePerm)
 	}
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -35,7 +33,7 @@ func UploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create a new file with the same name as the original filename in the upload directory
-	uploadedFile, err := os.Create(filepath.Join(uploadDir, handler.Filename))
+	uploadedFile, err := os.Create(filepath.Join(paths.UPLOADS_PATH, handler.Filename))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return

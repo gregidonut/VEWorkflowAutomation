@@ -151,6 +151,12 @@
             console.log(srcAttr)
         })
 
+        let srcFilePaths = []
+        selectedElements.forEach(function (e) {
+            srcFilePaths.push(e.querySelector("video source").getAttribute("src"))
+        })
+        stitchOneSecondVids(srcFilePaths)
+
         selectedElements = []
         console.log("==========")
 
@@ -165,5 +171,12 @@
             selectedElements = [];
         }
     });
+
+    function stitchOneSecondVids(array) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/stitchOneSecondVideos", true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(JSON.stringify(array));
+    }
 </script>
 {{end}}
