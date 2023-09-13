@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 func StitchOneSecondVideos(w http.ResponseWriter, r *http.Request) {
@@ -49,6 +50,10 @@ func generateInputFile(vidPathsToStitch []string) error {
 	var files []string
 	filepath.Walk(paths.WORKSPACE_REL_PATH, func(path string, info fs.FileInfo, err error) error {
 		if info.IsDir() {
+			return nil
+		}
+
+		if strings.Contains(path, "commitVids") {
 			return nil
 		}
 
