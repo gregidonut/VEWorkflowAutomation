@@ -56,12 +56,32 @@
 **backlog:**
 
 - [ ] breakdown business logic steps to be used as pseudocode
-    - [ ] a button that determines whether the user is ready to submit the selected list items
+    - [x] a button that determines whether the user is ready to submit the selected list items
     - [ ] reveal a dialog where they can write the script for the selected 5-second chunk
         - [x] stitch the 1-second chunks together before presenting it in the dialog
         - [ ] implement a fetch system in js where it asks the go runtime if there are any committed
-        5-second chunks yet
-        - [ ] have the go runtime send json that checks a specific dir from `"/static"` 
+          5-second chunks yet
+        - [ ] have the go runtime send json that checks a specific dir from `"/static"`
+    - [ ] list out the selected 5-second chunks in a second list for sanity check
+      and quick viewing
+    - [ ] break down the rest of the steps
+- [ ] outline requirements for larger scale deployment
+    - [ ] research serverless docker instances
+
+## commits
+
+[ 375a68c ](https://github.com/gregidonut/VEWorkflowAutomation/commit/375a68cf63da502e61ec3855033569b944997e05)..
+[ 22fe533 ](https://github.com/gregidonut/VEWorkflowAutomation/commit/22fe5335b5dc25e24442b05563f18d95a38452ae)
+
+# September 16, 2023(wednesday)
+
+**backlog:**
+
+- [ ] breakdown business logic steps to be used as pseudocode
+    - [ ] reveal a dialog where they can write the script for the selected 5-second chunk
+        - [ ] implement a fetch system in js where it asks the go runtime if there are any committed
+          5-second chunks yet
+        - [ ] have the go runtime send json that checks a specific dir from `"/static"`
     - [ ] list out the selected 5-second chunks in a second list for sanity check
       and quick viewing
     - [ ] break down the rest of the steps
