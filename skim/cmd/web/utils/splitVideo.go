@@ -1,7 +1,6 @@
 package utils
 
 import (
-	"bufio"
 	"fmt"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"io/fs"
@@ -9,7 +8,6 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"sync"
 )
 
 func SplitVideo() error {
@@ -50,7 +48,7 @@ func SplitVideo() error {
 		fmt.Sprintf("%s_no_sound.mp4", strings.TrimSuffix(uploadedFileName, filepath.Ext(uploadedFileName))),
 	)
 
-	err = runCmd(removeAudio)
+	err = runCmd(removeAudio, paths.UPLOADS_PATH)
 	if err != nil {
 		return err
 	}
@@ -83,61 +81,10 @@ func SplitVideo() error {
 		)+"_part_%04d.mp4",
 	)
 
-	err = runCmd(splitCmd)
+	err = runCmd(splitCmd, paths.UPLOADS_PATH)
 	if err != nil {
 		return err
 	}
 
-	return nil
-}
-
-func runCmd(cmd *exec.Cmd) error {
-	wg := sync.WaitGroup{}
-
-	cmd.Dir = paths.UPLOADS_PATH
-
-	stdout, err := cmd.StdoutPipe()
-	if err != nil {
-		return err
-	}
-
-	scanner := bufio.NewScanner(stdout)
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		for scanner.Scan() {
-			line := scanner.Text()
-			// Process the line of stdout here
-			fmt.Println(line)
-		}
-	}()
-
-	stderr, err := cmd.StderrPipe()
-	if err != nil {
-		return err
-	}
-
-	errScanner := bufio.NewScanner(stderr)
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		for errScanner.Scan() {
-			line := errScanner.Text()
-			// Process the line of stdout here
-			fmt.Println(line)
-		}
-	}()
-
-	err = cmd.Start()
-	if err != nil {
-		return err
-	}
-
-	err = cmd.Wait()
-	if err != nil {
-		return err
-	}
-
-	wg.Wait()
 	return nil
 }

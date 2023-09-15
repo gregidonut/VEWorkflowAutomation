@@ -58,8 +58,9 @@ afterSplitting:
 		SplitVidFilePaths: splitVidFiles,
 	}
 
+	fmt.Println("**split files:**")
 	for _, file := range splitVidFiles {
-		fmt.Println(file)
+		fmt.Printf("\t- %s\n", file)
 	}
 
 	ts, err := template.ParseFiles(files...)

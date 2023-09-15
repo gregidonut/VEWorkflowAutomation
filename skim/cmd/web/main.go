@@ -20,6 +20,7 @@ func main() {
 	mux.HandleFunc("/", handlers.Index)
 	mux.HandleFunc("/upload", handlers.UploadFile)
 	mux.HandleFunc("/edit", handlers.Edit)
+	mux.HandleFunc("/stitchOneSecondVideos", handlers.StitchOneSecondVideos)
 	log.Printf("Starting server on %s\n", DEFAULT_PORT)
 	err := http.ListenAndServe(DEFAULT_PORT, mux)
 	log.Fatal(err)
