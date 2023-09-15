@@ -58,7 +58,10 @@
 - [ ] breakdown business logic steps to be used as pseudocode
     - [ ] a button that determines whether the user is ready to submit the selected list items
     - [ ] reveal a dialog where they can write the script for the selected 5-second chunk
-        - [ ] stitch the 1-second chunks together before presenting it in the dialog
+        - [x] stitch the 1-second chunks together before presenting it in the dialog
+        - [ ] implement a fetch system in js where it asks the go runtime if there are any committed
+        5-second chunks yet
+        - [ ] have the go runtime send json that checks a specific dir from `"/static"` 
     - [ ] list out the selected 5-second chunks in a second list for sanity check
       and quick viewing
     - [ ] break down the rest of the steps
