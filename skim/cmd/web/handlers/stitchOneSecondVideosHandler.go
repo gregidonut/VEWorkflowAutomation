@@ -62,7 +62,7 @@ func generateInputFile(vidPathsToStitch []string) error {
 		return nil
 	})
 
-	if len(files) < 1 {
+	if len(files) < 1 && len(vidPathsToStitch) > 1 {
 		f, err := os.Create(fmt.Sprintf("%s/0000input.txt", paths.WORKSPACE_REL_PATH))
 		if err != nil {
 			return err
