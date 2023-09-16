@@ -18,7 +18,7 @@ async function fetchStaticFiles() {
     currentCommitVids = data;
 
     fileList.innerHTML = '';
-    currentCommitVids.forEach((file) => {
+    currentCommitVids.forEach((file, index) => {
 
         const listItem = document.createElement('li');
 
@@ -43,6 +43,17 @@ async function fetchStaticFiles() {
         listItem.appendChild(divWrapper);
 
         fileList.appendChild(listItem);
+
+        if (index === currentCommitVids.length - 1) {
+            const existingVideos = scriptingDialog.querySelectorAll('video');
+            existingVideos.forEach((existingVideo) => {
+                existingVideo.remove();
+            });
+
+            const lastVideo = video.cloneNode(true);
+            lastVideo.width = 384;
+            scriptingDialog.insertBefore(lastVideo, scriptingDialog.firstChild);
+        }
     });
 }
 

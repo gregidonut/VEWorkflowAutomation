@@ -2,6 +2,8 @@ const COLOR_BLUE = "rgb(0, 0, 255)"
 const COLOR_AQUA = "rgb(0, 255, 255)"
 const COLOR_GREY = "rgb(97, 97, 97)"
 
+const scriptingDialog = document.querySelector("#scripting-dialog")
+
 let isMouseDown = false;
 let selectedElements = [];
 
@@ -70,6 +72,8 @@ button.addEventListener("click", function () {
 
     stitchOneSecondVids(srcFilePaths)
 
+    scriptingDialog.showModal()
+
     selectedElements = []
     console.log("==========")
 
@@ -91,3 +95,8 @@ function stitchOneSecondVids(arr) {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(arr));
 }
+
+const scriptingDialogCloseBtn = document.querySelector("button.close-scripting-dialog-btn")
+scriptingDialogCloseBtn.addEventListener("click", () => {
+    scriptingDialog.close()
+})
