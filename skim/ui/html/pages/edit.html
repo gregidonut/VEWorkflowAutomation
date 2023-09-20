@@ -21,7 +21,7 @@
     </style>
     <section class="initial-timeline">
         <style>
-            div ul.vid-files-list {
+            ul.vid-files-list {
                 display: flex;
                 flex-direction: row;
                 gap: 1rem;
@@ -70,9 +70,20 @@
     </section>
 
     <section class="committed-timeline">
-        <p>
-            committed timeline
-        </p>
+        <style>
+            ul.committed-vid-files-list {
+                display: flex;
+                flex-direction: row;
+                gap: 1rem;
+
+                list-style: none;
+            }
+
+            ul.committed-vid-files-list div {
+                background: #834a4a;
+            }
+        </style>
+        <ul class="committed-vid-files-list"></ul>
     </section>
 
     <style>
@@ -84,99 +95,57 @@
             flex-direction: column;
         }
     </style>
-
     <section class="scripting-space">
-        <p>
-            scripting space
-        </p>
+        <style>
+            dialog#scripting-dialog {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background-color: slategrey;
+                padding: 2rem;
+                border: .1rem solid #ccc;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                width: 80rem;
+                text-align: center;
+                color: black;
+
+                position: relative;
+            }
+
+            dialog::backdrop {
+                background-color: black;
+                opacity: 0.5;
+            }
+
+            dialog#scripting-dialog button.close-scripting-dialog-btn {
+                position: absolute;
+                top: 0;
+                right: 0;
+
+                padding: 1rem;
+                margin: 1rem;
+            }
+
+            dialog#scripting-dialog form h3 {
+                font-size: 1.5rem;
+            }
+
+            dialog#scripting-dialog form textarea {
+                width: 100%;
+            }
+        </style>
+        <dialog id="scripting-dialog">
+            <button class="close-scripting-dialog-btn">x</button>
+            <form action="" method="post">
+                <h3><label for="script">Add a script</label></h3>
+                <textarea id="script" name="script" rows="8" cols="5"></textarea>
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+        </dialog>
     </section>
 </div>
-<script type="text/javascript">
-    const COLOR_BLUE = "rgb(0, 0, 255)"
-    const COLOR_AQUA = "rgb(0, 255, 255)"
-    const COLOR_GREY = "rgb(97, 97, 97)"
-
-    let isMouseDown = false;
-    let selectedElements = [];
-
-    let vidElements = document.querySelectorAll("div.vid-wrapper");
-
-    vidElements.forEach(function (e) {
-        e.addEventListener("mousedown", function () {
-            isMouseDown = true;
-            toggleSelection(e);
-        });
-
-        e.addEventListener("mouseover", function () {
-            if (isMouseDown) {
-                toggleSelection(e);
-            }
-        });
-    });
-
-    document.addEventListener("mouseup", function () {
-        isMouseDown = false;
-    });
-
-    function toggleSelection(element) {
-        if (element.style.backgroundColor === COLOR_BLUE) {
-            element.style.backgroundColor = COLOR_AQUA;
-            const index = selectedElements.indexOf(element);
-            if (index > -1) {
-                selectedElements.splice(index, 1);
-            }
-            return
-        }
-
-        if (selectedElements.length >= 4) {
-            return
-        }
-
-        element.style.backgroundColor = COLOR_BLUE;
-        selectedElements.push(element);
-    }
-
-    let button = document.querySelector("section.initial-timeline button.initial-timeline-select-btn");
-    button.addEventListener("click", function () {
-        selectedElements.forEach(function (e) {
-            e.style.backgroundColor = COLOR_GREY;
-        });
-        selectedElements.sort(function (a, b) {
-            const srcA = a.querySelector("video source").getAttribute("src");
-            const srcB = b.querySelector("video source").getAttribute("src");
-            return srcA.localeCompare(srcB);
-        });
-        selectedElements.forEach(function (e) {
-            const srcAttr = e.querySelector("video source").getAttribute("src")
-            console.log(srcAttr)
-        })
-
-        let srcFilePaths = []
-        selectedElements.forEach(function (e) {
-            srcFilePaths.push(e.querySelector("video source").getAttribute("src"))
-        })
-        stitchOneSecondVids(srcFilePaths)
-
-        selectedElements = []
-        console.log("==========")
-
-    });
-
-    document.addEventListener("click", function (event) {
-        const timelineSection = document.querySelector("section.initial-timeline");
-        if (!timelineSection.contains(event.target)) {
-            selectedElements.forEach(function (element) {
-                element.style.backgroundColor = COLOR_AQUA;
-            });
-            selectedElements = [];
-        }
-    });
-
-    function stitchOneSecondVids(array) {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "/stitchOneSecondVideos", true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.send(JSON.stringify(array));
-    }
-</script>
+<script src="/static/js/stitchVids.js"></script>
+<script src="/static/js/updateDOM.js"></script>
 {{end}}
