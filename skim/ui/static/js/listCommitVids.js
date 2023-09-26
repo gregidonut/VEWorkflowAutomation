@@ -1,4 +1,4 @@
-let currentCommitVids = []
+let currentRawCommitVids = []
 
 async function fetchStaticFiles() {
     const response = await fetch("/listCommittedFiles");
@@ -11,14 +11,14 @@ async function fetchStaticFiles() {
         return;
     }
 
-    if (currentCommitVids.length === data.length) {
+    if (currentRawCommitVids.length === data.length) {
         return;
     }
 
-    currentCommitVids = data;
+    currentRawCommitVids = data;
 
     fileList.innerHTML = '';
-    currentCommitVids.forEach((file, index) => {
+    currentRawCommitVids.forEach((file, index) => {
 
         const listItem = document.createElement('li');
 
@@ -44,7 +44,7 @@ async function fetchStaticFiles() {
 
         fileList.appendChild(listItem);
 
-        if (index === currentCommitVids.length - 1) {
+        if (index === currentRawCommitVids.length - 1) {
             const existingVideos = scriptingDialog.querySelectorAll('video');
             existingVideos.forEach((existingVideo) => {
                 existingVideo.remove();

@@ -2,7 +2,10 @@ package handlers
 
 import (
 	"encoding/json"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
 	"net/http"
+	"os"
 )
 
 func FSVids(w http.ResponseWriter, r *http.Request) {
@@ -11,16 +14,34 @@ func FSVids(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := map[string]string{
-		"message": "This is a POST request",
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-
-	err := json.NewEncoder(w).Encode(response)
+	err := utils.CombineFSVidWithTTSAudio()
 	if err != nil {
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	var fileNames []string
+	_, err = os.Stat(paths.FSVIDS_REL_PATH)
+	if os.IsNotExist(err) {
+		json.NewEncoder(w).Encode(fileNames)
+		return
+	}
+
+	//files, err := os.ReadDir(paths.FSVIDS_REL_PATH)
+	//if err != nil {
+	//	http.Error(w, err.Error(), http.StatusInternalServerError)
+	//	return
+	//}
+	//
+	//for _, file := range files {
+	//	if file.IsDir() {
+	//		continue
+	//	}
+	//
+	//	fileNames = append(fileNames, file.Name())
+	//}
+	//sort.Strings(fileNames)
+
+	//json.NewEncoder(w).Encode(fileNames)
+	w.WriteHeader(http.StatusOK)
 }

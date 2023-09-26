@@ -6,4 +6,5 @@ const (
 	STATIC_REL_PATH          = "skim/ui/static/"
 	WORKSPACE_REL_PATH       = "skim/ui/static/uploads/workspace"
 	RAW_COMMIT_VIDS_REL_PATH = "skim/ui/static/uploads/workspace/rawCommitVids"
+	FSVIDS_REL_PATH          = "skim/ui/static/uploads/workspace/actualCommitVids"
 )

@@ -32,6 +32,9 @@ func ListCommittedFiles(w http.ResponseWriter, r *http.Request) {
 		if strings.Contains(file.Name(), "txt") {
 			continue
 		}
+		if strings.Contains(file.Name(), "mp3") {
+			continue
+		}
 
 		fileNames = append(fileNames, file.Name())
 	}
