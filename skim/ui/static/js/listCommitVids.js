@@ -51,6 +51,7 @@ async function fetchStaticFiles() {
             });
 
             const lastVideo = video.cloneNode(true);
+            lastVideo.className = "dialog-preview-vid"
             lastVideo.width = 384;
             scriptingDialog.insertBefore(lastVideo, scriptingDialog.firstChild);
         }

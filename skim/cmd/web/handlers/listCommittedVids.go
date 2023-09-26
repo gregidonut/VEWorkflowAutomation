@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"sort"
+	"strings"
 )
 
 func ListCommittedFiles(w http.ResponseWriter, r *http.Request) {
@@ -25,9 +26,14 @@ func ListCommittedFiles(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, file := range files {
-		if !file.IsDir() {
-			fileNames = append(fileNames, file.Name())
+		if file.IsDir() {
+			continue
 		}
+		if strings.Contains(file.Name(), "txt") {
+			continue
+		}
+
+		fileNames = append(fileNames, file.Name())
 	}
 	sort.Strings(fileNames)
 

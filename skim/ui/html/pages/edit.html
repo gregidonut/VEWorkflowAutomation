@@ -137,7 +137,10 @@
         </style>
         <dialog id="scripting-dialog">
             <button class="close-scripting-dialog-btn">x</button>
-            <form action="" method="post">
+            <form
+                    action=""
+                    method="post"
+                    onsubmit="submitScript(document.getElementById('script')); return false;">
                 <h3><label for="script">Add a script</label></h3>
                 <textarea id="script" name="script" rows="8" cols="5"></textarea>
                 <br>
@@ -147,5 +150,6 @@
     </section>
 </div>
 <script src="/static/js/stitchVids.js"></script>
-<script src="/static/js/updateDOM.js"></script>
+<script src="/static/js/listCommitVids.js"></script>
+<script src="/static/js/submitScript.js"></script>
 {{end}}

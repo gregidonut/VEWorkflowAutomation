@@ -3,8 +3,6 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
-	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -19,7 +17,7 @@ type VidPathAndScript struct {
 func (vpas *VidPathAndScript) scriptFilePath() string {
 	name := strings.TrimSuffix(vpas.VidPath, filepath.Ext(vpas.VidPath))
 
-	return fmt.Sprintf("%s/%s.txt", paths.COMMIT_VIDS_REL_PATH, name)
+	return fmt.Sprintf("skim/ui%s.txt", name)
 
 }
 
@@ -38,14 +36,16 @@ func WriteScriptToFile(w http.ResponseWriter, r *http.Request) {
 
 	file, err := os.OpenFile(vidScript.scriptFilePath(), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
-		log.Fatal(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 	defer file.Close()
 
 	// Write the text to the file
 	_, err = file.WriteString(vidScript.Script)
 	if err != nil {
-		log.Fatal(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 	w.WriteHeader(http.StatusOK)
