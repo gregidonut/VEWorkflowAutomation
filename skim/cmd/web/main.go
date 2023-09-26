@@ -22,6 +22,7 @@ func main() {
 	mux.HandleFunc("/edit", handlers.Edit)
 	mux.HandleFunc("/stitchOneSecondVideos", handlers.StitchOneSecondVideos)
 	mux.HandleFunc("/listCommittedFiles", handlers.ListCommittedFiles)
+	mux.HandleFunc("/writeScriptToFile", handlers.WriteScriptToFile)
 
 	log.Printf("Starting server on %s\n", DEFAULT_PORT)
 
