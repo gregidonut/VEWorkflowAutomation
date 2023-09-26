@@ -30,7 +30,7 @@ async function fetchStaticFiles() {
         video.controls = true;
 
         const source = document.createElement('source');
-        source.src = `/static/uploads/workspace/commitVids/${file}`;
+        source.src = `/static/uploads/workspace/rawCommitVids/${file}`;
         source.type = 'video/mp4';
 
         const fallbackText = document.createTextNode('Your browser does not support the video tag.');

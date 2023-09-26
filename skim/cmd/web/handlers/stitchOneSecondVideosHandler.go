@@ -53,7 +53,7 @@ func generateInputFile(vidPathsToStitch []string) error {
 			return nil
 		}
 
-		if strings.Contains(path, "commitVids") {
+		if strings.Contains(path, "rawCommitVids") {
 			return nil
 		}
 
