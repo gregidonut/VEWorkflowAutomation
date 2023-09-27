@@ -23,7 +23,8 @@ func main() {
 	mux.HandleFunc("/stitchOneSecondVideos", handlers.StitchOneSecondVideos)
 	mux.HandleFunc("/listCommittedFiles", handlers.ListCommittedFiles)
 	mux.HandleFunc("/writeScriptToFile", handlers.WriteScriptToFile)
-	mux.HandleFunc("/genFSVids", handlers.GenFSVid)
+	mux.HandleFunc("/generateFSVids", handlers.GenerateFSVid)
+	mux.HandleFunc("/getFSVids", handlers.GetFSVid)
 
 	log.Printf("Starting server on %s\n", DEFAULT_PORT)
 

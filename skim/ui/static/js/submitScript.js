@@ -20,7 +20,7 @@ function submitScript(scriptTextNode) {
 
 function combineFSVidWithScriptTTSAudio() {
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/genFSVids", true);
+    xhr.open("POST", "/generateFSVids", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify({
         combineLastVideoWithScriptAudio: true
