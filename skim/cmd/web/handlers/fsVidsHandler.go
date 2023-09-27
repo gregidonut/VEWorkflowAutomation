@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func FSVids(w http.ResponseWriter, r *http.Request) {
+func GenFSVid(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -27,21 +27,5 @@ func FSVids(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//files, err := os.ReadDir(paths.FSVIDS_REL_PATH)
-	//if err != nil {
-	//	http.Error(w, err.Error(), http.StatusInternalServerError)
-	//	return
-	//}
-	//
-	//for _, file := range files {
-	//	if file.IsDir() {
-	//		continue
-	//	}
-	//
-	//	fileNames = append(fileNames, file.Name())
-	//}
-	//sort.Strings(fileNames)
-
-	//json.NewEncoder(w).Encode(fileNames)
 	w.WriteHeader(http.StatusOK)
 }

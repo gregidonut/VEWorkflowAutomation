@@ -3,7 +3,6 @@ package utils
 import (
 	"fmt"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
-	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -11,28 +10,25 @@ import (
 )
 
 func SplitVideo() error {
-
 	_, err := os.Stat(paths.SPLITVIDS_REL_PATH)
 	if os.IsNotExist(err) {
-		mkdirCmd := exec.Command("mkdir", "splitVids")
-		mkdirCmd.Dir = paths.UPLOADS_PATH
-		mkdirCmd.Run()
+		os.Mkdir(paths.SPLITVIDS_REL_PATH, os.ModeDir|os.ModePerm)
 	}
 
 	fmt.Println("created splitVidDir")
 
 	var uploadedFileName string
-	filepath.Walk(paths.UPLOADS_PATH, func(path string, info fs.FileInfo, err error) error {
-		if info.IsDir() {
-			return nil
-		}
-		if strings.Contains(path, "splitVids") {
-			return nil
-		}
+	files, err := os.ReadDir(paths.UPLOADS_PATH)
+	if err != nil {
+		return err
+	}
 
-		uploadedFileName = filepath.Base(path)
-		return nil
-	})
+	for _, f := range files {
+		if f.IsDir() {
+			continue
+		}
+		uploadedFileName = filepath.Base(f.Name())
+	}
 
 	fmt.Printf("uploaded filename: %q\n", uploadedFileName)
 
