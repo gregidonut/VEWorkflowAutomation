@@ -18,7 +18,7 @@ async function fetchActualCommitVidFiles() {
     currentActualCommitVids = data;
 
     fileList.innerHTML = '';
-    currentActualCommitVids.forEach((file, index) => {
+    currentActualCommitVids.forEach((fsVid, index) => {
 
         const listItem = document.createElement('li');
 
@@ -30,7 +30,7 @@ async function fetchActualCommitVidFiles() {
         video.controls = true;
 
         const source = document.createElement('source');
-        source.src = `/static/uploads/workspace/actualCommitVids/${file}`;
+        source.src = `/static/uploads/workspace/actualCommitVids/${fsVid.vBasePath}`;
         source.type = 'video/mp4';
 
         const fallbackText = document.createTextNode('Your browser does not support the video tag.');

@@ -2,10 +2,13 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/fsvid"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 func GetFSVid(w http.ResponseWriter, r *http.Request) {
@@ -15,7 +18,7 @@ func GetFSVid(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var fileNames []string
+	var fsVids []fsvid.FSVid
 	files, err := os.ReadDir(paths.FSVIDS_REL_PATH)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -26,8 +29,19 @@ func GetFSVid(w http.ResponseWriter, r *http.Request) {
 		if f.IsDir() {
 			continue
 		}
-		fileNames = append(fileNames, filepath.Base(f.Name()))
+		scriptBasePath := strings.TrimSuffix(filepath.Base(f.Name()), ".mp4") + ".txt"
+		fsVid, err := fsvid.NewFSVid(map[string]string{
+			"vPath":      fmt.Sprintf("%s/%s", paths.FSVIDS_REL_PATH, filepath.Base(f.Name())),
+			"scriptPath": fmt.Sprintf("%s/%s", paths.RAW_COMMIT_VIDS_REL_PATH, scriptBasePath),
+		})
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+
+		fsVids = append(fsVids, *fsVid)
 	}
-	json.NewEncoder(w).Encode(fileNames)
-	w.WriteHeader(http.StatusOK)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(fsVids)
 }
