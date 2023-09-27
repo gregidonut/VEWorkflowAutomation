@@ -107,22 +107,43 @@
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                justify-content: center;
+                justify-content: end;
                 width: 100%;
                 gap: 1rem;
+
+                min-height: 8rem;
+
+                position: relative;
             }
 
-            ul.committed-vid-files-list li div.commit-vid-wrapper div button.script-edit-btn {
+            ul.committed-vid-files-list li div.commit-vid-wrapper div div {
+                position: absolute;
+                left: 0;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                width: auto;
+            }
+
+            ul.committed-vid-files-list li div.commit-vid-wrapper div div button.script-edit-btn {
                 background-color: #420042;
                 border-radius: 51%;
             }
 
-            ul.committed-vid-files-list li div.commit-vid-wrapper div button.script-edit-btn img:active {
+            ul.committed-vid-files-list li div.commit-vid-wrapper div div button.commit-vid-delete-btn {
+                background-color: #ff0000;
+                border-radius: 51%;
+            }
+
+            ul.committed-vid-files-list li div.commit-vid-wrapper div div button.script-edit-btn img:active,
+            ul.committed-vid-files-list li div.commit-vid-wrapper div div button.commit-vid-delete-btn img:active {
                 width: 15px;
             }
 
             ul.committed-vid-files-list li div.commit-vid-wrapper div p.script-text {
-                flex-grow: 1;
+                width: 80%;
             }
         </style>
         <ul class="committed-vid-files-list"></ul>

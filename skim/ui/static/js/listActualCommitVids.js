@@ -42,16 +42,31 @@ async function fetchActualCommitVidFiles() {
         const scriptSection = document.createElement('div')
         itemDivWrapper.appendChild(scriptSection)
 
+        const scriptSectionCtrls = document.createElement("div")
+
         const editBtn = document.createElement("button")
         editBtn.className = "script-edit-btn"
         editBtn.innerHTML = `<img src="/static/assets/editIcon.svg" alt="edit-icon" width="20px"/>`
 
+        editBtn.querySelector("img").addEventListener("click", function () {
+            console.log(fsVid.vBasePath)
+        })
+
+        const delBtn = document.createElement("button")
+        delBtn.className = "commit-vid-delete-btn"
+        delBtn.innerHTML = `<img src="/static/assets/delIcon.svg" alt="edit-icon" width="20px"/>`
+        delBtn.querySelector("img").addEventListener("click", function () {
+            console.log(fsVid.vBasePath)
+        })
+
+        scriptSectionCtrls.appendChild(editBtn)
+        scriptSectionCtrls.appendChild(delBtn)
 
         const scriptText = document.createElement('p')
         scriptText.className = "script-text"
         scriptText.innerHTML = fsVid.script
 
-        scriptSection.appendChild(editBtn)
+        scriptSection.appendChild(scriptSectionCtrls)
         scriptSection.appendChild(scriptText)
 
         listItem.appendChild(itemDivWrapper);
