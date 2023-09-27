@@ -8,6 +8,7 @@ import (
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"io"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -35,10 +36,6 @@ func CombineFSVidWithTTSAudio() error {
 		fileNames = append(fileNames, filepath.Base(f.Name()))
 	}
 	sort.Strings(fileNames)
-	//fmt.Println("filenames: ")
-	//for _, v := range fileNames {
-	//	fmt.Printf("\t- %s\n", v)
-	//}
 
 	lastVidFileMP4 := fileNames[len(fileNames)-1]
 	err = generateTTS(lastVidFileMP4)
@@ -46,23 +43,23 @@ func CombineFSVidWithTTSAudio() error {
 		return err
 	}
 
-	//CombineFSVidWithTTSCmd := exec.Command(
-	//	"ffmpeg",
-	//	"-i",
-	//	fmt.Sprintf("rawCommitVids/%s", lastVidFileMP4),
-	//	"-i",
-	//	fmt.Sprintf("rawCommitVids/%s.mp3", strings.TrimSuffix(lastVidFileMP4, ".mp4")),
-	//	"-c:v",
-	//	"copy",
-	//	"-c:a",
-	//	"aac",
-	//	fmt.Sprintf("actualCommitVids/%s", lastVidFileMP4),
-	//)
-	//
-	//err = runCmd(CombineFSVidWithTTSCmd, paths.WORKSPACE_REL_PATH)
-	//if err != nil {
-	//	return err
-	//}
+	CombineFSVidWithTTSCmd := exec.Command(
+		"ffmpeg",
+		"-i",
+		fmt.Sprintf("%s/%s", paths.RAW_COMMIT_VIDS_REL_PATH, lastVidFileMP4),
+		"-i",
+		fmt.Sprintf("%s/%s.mp3", paths.RAW_COMMIT_VIDS_REL_PATH, strings.TrimSuffix(lastVidFileMP4, ".mp4")),
+		"-c:v",
+		"copy",
+		"-c:a",
+		"aac",
+		fmt.Sprintf("%s/%s", paths.FSVIDS_REL_PATH, lastVidFileMP4),
+	)
+
+	err = runCmd(CombineFSVidWithTTSCmd, ".")
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
