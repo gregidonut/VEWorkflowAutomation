@@ -12,7 +12,7 @@
     }
 </style>
 <div class="edit-space">
-   <style>
+    <style>
         section.initial-timeline {
             display: flex;
             flex-direction: column;
@@ -86,8 +86,43 @@
                 list-style: none;
             }
 
-            ul.committed-vid-files-list div {
+            ul.committed-vid-files-list div.commit-vid-wrapper {
                 background: #834a4a;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                height: 100%;
+                width: 256px;
+            }
+
+            ul.committed-vid-files-list li div.commit-vid-wrapper div {
+                color: antiquewhite;
+                font-size: 1.5rem;
+                padding: .7rem;
+                flex-grow: 1;
+
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                gap: 1rem;
+            }
+
+            ul.committed-vid-files-list li div.commit-vid-wrapper div button.script-edit-btn {
+                background-color: #420042;
+                border-radius: 51%;
+            }
+
+            ul.committed-vid-files-list li div.commit-vid-wrapper div button.script-edit-btn img:active {
+                width: 15px;
+            }
+
+            ul.committed-vid-files-list li div.commit-vid-wrapper div p.script-text {
+                flex-grow: 1;
             }
         </style>
         <ul class="committed-vid-files-list"></ul>

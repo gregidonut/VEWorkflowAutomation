@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 )
 
@@ -41,6 +42,10 @@ func GetFSVid(w http.ResponseWriter, r *http.Request) {
 
 		fsVids = append(fsVids, *fsVid)
 	}
+
+	sort.Slice(fsVids, func(i, j int) bool {
+		return fsVids[i].VBasePath < fsVids[j].VBasePath
+	})
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(fsVids)

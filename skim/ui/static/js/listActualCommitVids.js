@@ -22,8 +22,8 @@ async function fetchActualCommitVidFiles() {
 
         const listItem = document.createElement('li');
 
-        const divWrapper = document.createElement('div');
-        divWrapper.classList.add('commit-vid-wrapper');
+        const itemDivWrapper = document.createElement('div');
+        itemDivWrapper.classList.add('commit-vid-wrapper');
 
         const video = document.createElement('video');
         video.width = 256;
@@ -38,9 +38,23 @@ async function fetchActualCommitVidFiles() {
         video.appendChild(source);
         video.appendChild(fallbackText);
 
-        divWrapper.appendChild(video);
+        itemDivWrapper.appendChild(video);
+        const scriptSection = document.createElement('div')
+        itemDivWrapper.appendChild(scriptSection)
 
-        listItem.appendChild(divWrapper);
+        const editBtn = document.createElement("button")
+        editBtn.className = "script-edit-btn"
+        editBtn.innerHTML = `<img src="/static/assets/editIcon.svg" alt="edit-icon" width="20px"/>`
+
+
+        const scriptText = document.createElement('p')
+        scriptText.className = "script-text"
+        scriptText.innerHTML = fsVid.script
+
+        scriptSection.appendChild(editBtn)
+        scriptSection.appendChild(scriptText)
+
+        listItem.appendChild(itemDivWrapper);
 
         fileList.appendChild(listItem);
     });
