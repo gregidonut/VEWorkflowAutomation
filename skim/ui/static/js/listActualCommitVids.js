@@ -72,8 +72,8 @@ async function fetchActualCommitVidFiles() {
             editDialog.insertBefore(videoToEditScriptOn, editDialog.firstChild);
             editDialog.querySelector("textarea").value = ""
             editDialog.querySelector("textarea").value = fsVid.script
-            console.log(fsVid.vBasePath)
 
+            editDialog.setAttribute("fsVid-prop", JSON.stringify(fsVid))
             editDialog.showModal()
         })
 

@@ -207,11 +207,12 @@
             <form
                     action=""
                     method="post"
-                    onsubmit="submitScript(document.getElementById('script')); return false;">
+                    onsubmit="submitScript(); return false;">
                 <h3><label for="script">Add a script</label></h3>
                 <textarea id="script" name="script" rows="8" cols="5"></textarea>
                 <br>
-                <input type="submit" value="Submit">
+                <label for="scripting-dialog-submit"></label>
+                <input type="submit" value="Submit" id="scripting-dialog-submit">
             </form>
         </dialog>
         <dialog id="edit-dialog">
@@ -219,11 +220,12 @@
             <form
                     action=""
                     method="post"
-                    onsubmit="editScript(document.getElementById('new-script')); return false;">
+                    onsubmit="editScript(); return false;">
                 <h3><label for="new-script">edit the script</label></h3>
                 <textarea id="new-script" name="new-script" rows="8" cols="5"></textarea>
                 <br>
-                <input type="submit" value="Submit">
+                <label for="edit-dialog-submit"></label>
+                <input type="submit" value="Submit" id="edit-dialog-submit">
             </form>
         </dialog>
     </section>

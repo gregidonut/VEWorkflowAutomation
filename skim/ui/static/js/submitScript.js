@@ -4,7 +4,8 @@ function getVidSrc() {
         .getAttribute('src');
 }
 
-function submitScript(scriptTextNode) {
+function submitScript() {
+    const scriptTextNode = document.getElementById('script')
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "/writeScriptToFile", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
