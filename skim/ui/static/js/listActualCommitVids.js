@@ -1,3 +1,5 @@
+const editDialog = document.querySelector("#edit-dialog")
+
 let currentActualCommitVids = []
 
 async function fetchActualCommitVidFiles() {
@@ -47,9 +49,32 @@ async function fetchActualCommitVidFiles() {
         const editBtn = document.createElement("button")
         editBtn.className = "script-edit-btn"
         editBtn.innerHTML = `<img src="/static/assets/editIcon.svg" alt="edit-icon" width="20px"/>`
-
         editBtn.querySelector("img").addEventListener("click", function () {
+            const existingVideos = editDialog.querySelectorAll('video');
+            existingVideos.forEach((existingVideo) => {
+                existingVideo.remove();
+            });
+
+            const videoToEditScriptOn = document.createElement("video")
+            videoToEditScriptOn.width = 384;
+            videoToEditScriptOn.controls = true;
+
+            const source = document.createElement('source');
+            source.src = `/static/uploads/workspace/rawCommitVids/${fsVid.vBasePath}`;
+            source.type = 'video/mp4';
+
+            const fallbackText = document.createTextNode('Your browser does not support the video tag.');
+
+            videoToEditScriptOn.appendChild(source);
+            videoToEditScriptOn.appendChild(fallbackText);
+
+
+            editDialog.insertBefore(videoToEditScriptOn, editDialog.firstChild);
+            editDialog.querySelector("textarea").value = ""
+            editDialog.querySelector("textarea").value = fsVid.script
             console.log(fsVid.vBasePath)
+
+            editDialog.showModal()
         })
 
         const delBtn = document.createElement("button")
@@ -70,10 +95,14 @@ async function fetchActualCommitVidFiles() {
         scriptSection.appendChild(scriptText)
 
         listItem.appendChild(itemDivWrapper);
-
         fileList.appendChild(listItem);
     });
 }
 
 fetchActualCommitVidFiles()
 setInterval(fetchActualCommitVidFiles, 1000)
+
+const editDialogCloseBtn = document.querySelector("button.close-edit-dialog-btn")
+editDialogCloseBtn.addEventListener("click", () => {
+    editDialog.close()
+})

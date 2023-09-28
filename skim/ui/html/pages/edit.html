@@ -160,6 +160,7 @@
     </style>
     <section class="scripting-space">
         <style>
+            dialog#edit-dialog,
             dialog#scripting-dialog {
                 position: fixed;
                 top: 50%;
@@ -181,6 +182,7 @@
                 opacity: 0.5;
             }
 
+            dialog#edit-dialog button.close-edit-dialog-btn,
             dialog#scripting-dialog button.close-scripting-dialog-btn {
                 position: absolute;
                 top: 0;
@@ -190,10 +192,12 @@
                 margin: 1rem;
             }
 
+            dialog#edit-dialog form h3,
             dialog#scripting-dialog form h3 {
                 font-size: 1.5rem;
             }
 
+            dialog#edit-dialog form textarea,
             dialog#scripting-dialog form textarea {
                 width: 100%;
             }
@@ -210,10 +214,23 @@
                 <input type="submit" value="Submit">
             </form>
         </dialog>
+        <dialog id="edit-dialog">
+            <button class="close-edit-dialog-btn">x</button>
+            <form
+                    action=""
+                    method="post"
+                    onsubmit="editScript(document.getElementById('new-script')); return false;">
+                <h3><label for="new-script">edit the script</label></h3>
+                <textarea id="new-script" name="new-script" rows="8" cols="5"></textarea>
+                <br>
+                <input type="submit" value="Submit">
+            </form>
+        </dialog>
     </section>
 </div>
 <script src="/static/js/stitchVids.js"></script>
 <script src="/static/js/listRawCommitVids.js"></script>
 <script src="/static/js/submitScript.js"></script>
 <script src="/static/js/listActualCommitVids.js"></script>
+<script src="/static/js/editScript.js"></script>
 {{end}}
