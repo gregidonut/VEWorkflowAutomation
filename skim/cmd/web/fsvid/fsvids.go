@@ -65,3 +65,30 @@ func (fsv *FSVid) fillRestOfFields() error {
 	fsv.Script = string(textBytes)
 	return nil
 }
+
+func (fsv *FSVid) EditScript() error {
+	fmt.Println("editing fsvid.script")
+	fmt.Printf("%s\n", fsv.Script)
+
+	fileByetes, err := os.ReadFile(fsv.ScriptPath)
+	if err != nil {
+		return fmt.Errorf("%v:%v", editFileErr, err)
+	}
+
+	if string(fileByetes) == fsv.Script {
+		return fmt.Errorf("%v:%s", editFileErr, "script is the same")
+	}
+
+	file, err := os.OpenFile(fsv.ScriptPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	if err != nil {
+		return fmt.Errorf("%v:%v", editFileErr, err)
+	}
+	defer file.Close()
+
+	_, err = file.WriteString(fsv.Script)
+	if err != nil {
+		return fmt.Errorf("%v:%v", editFileErr, err)
+	}
+
+	return nil
+}

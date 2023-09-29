@@ -38,8 +38,7 @@ func CombineFSVidWithTTSAudio() error {
 	sort.Strings(fileNames)
 
 	lastVidFileMP4 := fileNames[len(fileNames)-1]
-	err = generateTTS(lastVidFileMP4)
-	if err != nil {
+	if err = generateTTS(lastVidFileMP4); err != nil {
 		return err
 	}
 
