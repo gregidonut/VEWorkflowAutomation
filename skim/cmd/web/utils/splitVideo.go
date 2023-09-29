@@ -44,7 +44,7 @@ func SplitVideo() error {
 		fmt.Sprintf("%s_no_sound.mp4", strings.TrimSuffix(uploadedFileName, filepath.Ext(uploadedFileName))),
 	)
 
-	err = runCmd(removeAudio, paths.UPLOADS_PATH)
+	err = RunCmd(removeAudio, paths.UPLOADS_PATH)
 	if err != nil {
 		return err
 	}
@@ -77,7 +77,7 @@ func SplitVideo() error {
 		)+"_part_%04d.mp4",
 	)
 
-	err = runCmd(splitCmd, paths.UPLOADS_PATH)
+	err = RunCmd(splitCmd, paths.UPLOADS_PATH)
 	if err != nil {
 		return err
 	}

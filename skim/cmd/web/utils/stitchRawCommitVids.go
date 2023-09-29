@@ -44,7 +44,7 @@ func StitchVids() error {
 		fmt.Sprintf("rawCommitVids/output%s.mp4", strings.TrimSuffix(filePaths[len(filePaths)-1], "input.txt")),
 	)
 
-	err = runCmd(stitchvids, paths.WORKSPACE_REL_PATH)
+	err = RunCmd(stitchvids, paths.WORKSPACE_REL_PATH)
 	if err != nil {
 		return err
 	}

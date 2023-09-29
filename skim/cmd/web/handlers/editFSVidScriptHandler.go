@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/fsvid"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
 	"net/http"
 )
 
@@ -27,7 +26,7 @@ func EditFSVidScript(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Println("replacing tts audio..")
-	if err := utils.ReplaceTTSAudio(&fsv); err != nil {
+	if err := fsv.ReplaceTTSAudio(); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

@@ -38,7 +38,7 @@ func CombineFSVidWithTTSAudio() error {
 	sort.Strings(fileNames)
 
 	lastVidFileMP4 := fileNames[len(fileNames)-1]
-	if err = generateTTS(lastVidFileMP4); err != nil {
+	if err = GenerateTTS(lastVidFileMP4); err != nil {
 		return err
 	}
 
@@ -55,7 +55,7 @@ func CombineFSVidWithTTSAudio() error {
 		fmt.Sprintf("%s/%s", paths.FSVIDS_REL_PATH, lastVidFileMP4),
 	)
 
-	err = runCmd(CombineFSVidWithTTSCmd, ".")
+	err = RunCmd(CombineFSVidWithTTSCmd, ".")
 	if err != nil {
 		return err
 	}
@@ -63,7 +63,7 @@ func CombineFSVidWithTTSAudio() error {
 	return nil
 }
 
-func generateTTS(lastVidFileMP4 string) error {
+func GenerateTTS(lastVidFileMP4 string) error {
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
 	}))
