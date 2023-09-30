@@ -3,6 +3,7 @@ const editDialog = document.querySelector("#edit-dialog")
 let currentActualCommitVids = []
 
 async function fetchActualCommitVidFiles() {
+    console.log("calling fetch on getFSVids endpoint...")
     const response = await fetch("/getFSVids");
     const data = await response.json();
 
@@ -20,7 +21,7 @@ async function fetchActualCommitVidFiles() {
     currentActualCommitVids = data;
 
     fileList.innerHTML = '';
-    currentActualCommitVids.forEach((fsVid, index) => {
+    currentActualCommitVids.forEach((fsVid) => {
 
         const listItem = document.createElement('li');
 
