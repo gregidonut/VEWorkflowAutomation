@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 type FSVid struct {
@@ -13,6 +14,7 @@ type FSVid struct {
 	Script         string `json:"script"`
 	ScriptBasePath string `json:"scriptBasePath"`
 	ScriptPath     string `json:"scriptPath"`
+	LastModified   string `json:"lastModified"`
 }
 
 func NewFSVid(kwargs map[string]string) (*FSVid, error) {
@@ -63,6 +65,11 @@ func (fsv *FSVid) fillRestOfFields() error {
 	}
 
 	fsv.Script = string(textBytes)
+
+	if err = fsv.UpdateModTime(); err != nil {
+		return err
+	}
+
 	return nil
 }
 
@@ -90,5 +97,15 @@ func (fsv *FSVid) EditScript() error {
 		return fmt.Errorf("%v:%v", editFileErr, err)
 	}
 
+	return nil
+}
+
+func (fsv *FSVid) UpdateModTime() error {
+	fInfo, err := os.Stat(fsv.VPath)
+	if err != nil {
+		return err
+	}
+
+	fsv.LastModified = fInfo.ModTime().Format(time.RFC3339)
 	return nil
 }
