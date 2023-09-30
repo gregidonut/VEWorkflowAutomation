@@ -14,7 +14,7 @@ async function fetchActualCommitVidFiles() {
         return;
     }
 
-    if (currentActualCommitVids.length === data.length) {
+    if (arraysAreEqualByLastModified(currentActualCommitVids, data)) {
         return;
     }
 
@@ -33,7 +33,7 @@ async function fetchActualCommitVidFiles() {
         video.controls = true;
 
         const source = document.createElement('source');
-        source.src = `/static/uploads/workspace/actualCommitVids/${fsVid.vBasePath}`;
+        source.src = `/static/uploads/workspace/actualCommitVids/${fsVid.vBasePath}?timestamp=${fsVid.lastModified}`;
         source.type = 'video/mp4';
 
         const fallbackText = document.createTextNode('Your browser does not support the video tag.');
@@ -107,3 +107,17 @@ const editDialogCloseBtn = document.querySelector("button.close-edit-dialog-btn"
 editDialogCloseBtn.addEventListener("click", () => {
     editDialog.close()
 })
+
+function arraysAreEqualByLastModified(array1, array2) {
+    if (array1.length !== array2.length) {
+        return false;
+    }
+
+    for (let i = 0; i < array1.length; i++) {
+        if (array1[i].lastModified !== array2[i].lastModified) {
+            return false;
+        }
+    }
+
+    return true;
+}
