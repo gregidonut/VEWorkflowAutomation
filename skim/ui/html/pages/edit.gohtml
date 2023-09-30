@@ -161,7 +161,8 @@
     <section class="scripting-space">
         <style>
             dialog#edit-dialog,
-            dialog#scripting-dialog {
+            dialog#scripting-dialog,
+            dialog#delete-dialog {
                 position: fixed;
                 top: 50%;
                 left: 50%;
@@ -227,6 +228,18 @@
                 <label for="edit-dialog-submit"></label>
                 <input type="submit" value="Submit" id="edit-dialog-submit">
             </form>
+            <dialog id="delete-dialog">
+                <button class="close-delete-dialog-btn">x</button>
+                <form
+                        action=""
+                        method="post"
+                        onsubmit="deleteScript(); return false;">
+                    <h3><label for="new-script">Are you sure you want to delete?</label></h3>
+                    <br>
+                    <label for="edit-dialog-submit"></label>
+                    <input type="submit" value="Confirm" id="delete-dialog-confirm">
+                </form>
+            </dialog>
         </dialog>
     </section>
 </div>

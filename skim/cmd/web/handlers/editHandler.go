@@ -38,8 +38,8 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 
 afterSplitting:
 	files := []string{
-		"./skim/ui/html/base.html",
-		"./skim/ui/html/pages/edit.html",
+		"./skim/ui/html/base.gohtml",
+		"./skim/ui/html/pages/edit.gohtml",
 	}
 
 	var splitVidFiles []string
