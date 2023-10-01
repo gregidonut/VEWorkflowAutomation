@@ -6,28 +6,37 @@ import (
 	"net/http"
 	"os"
 	"sort"
+	"strings"
 )
 
 func ListCommittedFiles(w http.ResponseWriter, r *http.Request) {
 	var fileNames []string
 	w.Header().Set("Content-Type", "application/json")
 
-	_, err := os.Stat(paths.COMMIT_VIDS_REL_PATH)
+	_, err := os.Stat(paths.RAW_COMMIT_VIDS_REL_PATH)
 	if os.IsNotExist(err) {
 		json.NewEncoder(w).Encode(fileNames)
 		return
 	}
 
-	files, err := os.ReadDir(paths.COMMIT_VIDS_REL_PATH)
+	files, err := os.ReadDir(paths.RAW_COMMIT_VIDS_REL_PATH)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	for _, file := range files {
-		if !file.IsDir() {
-			fileNames = append(fileNames, file.Name())
+		if file.IsDir() {
+			continue
 		}
+		if strings.Contains(file.Name(), "txt") {
+			continue
+		}
+		if strings.Contains(file.Name(), "mp3") {
+			continue
+		}
+
+		fileNames = append(fileNames, file.Name())
 	}
 	sort.Strings(fileNames)
 

@@ -5,7 +5,6 @@ import (
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
 	"html/template"
-	"io/fs"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -39,20 +38,23 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 
 afterSplitting:
 	files := []string{
-		"./skim/ui/html/base.html",
-		"./skim/ui/html/pages/edit.html",
+		"./skim/ui/html/base.gohtml",
+		"./skim/ui/html/pages/edit.gohtml",
 	}
 
 	var splitVidFiles []string
+	dirEntry, err := os.ReadDir(paths.SPLITVIDS_REL_PATH)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-	filepath.Walk(paths.SPLITVIDS_REL_PATH, func(path string, info fs.FileInfo, err error) error {
-		if info.IsDir() {
-			return nil
+	for _, f := range dirEntry {
+		if f.IsDir() {
+			continue
 		}
-
-		splitVidFiles = append(splitVidFiles, fmt.Sprintf("/static/uploads/splitVids/%s", filepath.Base(path)))
-		return nil
-	})
+		splitVidFiles = append(splitVidFiles, fmt.Sprintf("/static/uploads/splitVids/%s", filepath.Base(f.Name())))
+	}
 
 	data := &templateData{
 		SplitVidFilePaths: splitVidFiles,

@@ -5,14 +5,12 @@ import (
 	"fmt"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
-	"io/fs"
 	"log"
 	"net/http"
 	"os"
 	"path/filepath"
 	"sort"
 	"strconv"
-	"strings"
 )
 
 func StitchOneSecondVideos(w http.ResponseWriter, r *http.Request) {
@@ -47,22 +45,20 @@ func StitchOneSecondVideos(w http.ResponseWriter, r *http.Request) {
 }
 
 func generateInputFile(vidPathsToStitch []string) error {
-	var files []string
-	filepath.Walk(paths.WORKSPACE_REL_PATH, func(path string, info fs.FileInfo, err error) error {
-		if info.IsDir() {
-			return nil
+	var filePaths []string
+	files, err := os.ReadDir(paths.WORKSPACE_REL_PATH)
+	if err != nil {
+		return err
+	}
+
+	for _, f := range files {
+		if f.IsDir() {
+			continue
 		}
+		filePaths = append(filePaths, filepath.Base(f.Name()))
+	}
 
-		if strings.Contains(path, "commitVids") {
-			return nil
-		}
-
-		files = append(files, filepath.Base(path))
-
-		return nil
-	})
-
-	if len(files) < 1 && len(vidPathsToStitch) > 1 {
+	if len(filePaths) < 1 && len(vidPathsToStitch) > 1 {
 		f, err := os.Create(fmt.Sprintf("%s/0000input.txt", paths.WORKSPACE_REL_PATH))
 		if err != nil {
 			return err
@@ -79,8 +75,8 @@ func generateInputFile(vidPathsToStitch []string) error {
 		}
 
 	} else {
-		sort.Strings(files)
-		lastFile := files[len(files)-1]
+		sort.Strings(filePaths)
+		lastFile := filePaths[len(filePaths)-1]
 
 		fileNumber := lastFile[:4]
 		fileNumberAsInt, err := strconv.Atoi(fileNumber)
@@ -106,8 +102,8 @@ func generateInputFile(vidPathsToStitch []string) error {
 		}
 	}
 
-	fmt.Printf("files in %s\n", paths.WORKSPACE_REL_PATH)
-	for _, file := range files {
+	fmt.Printf("filePaths in %s\n", paths.WORKSPACE_REL_PATH)
+	for _, file := range filePaths {
 		fmt.Printf("\t%s\n", file)
 	}
 

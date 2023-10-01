@@ -9,7 +9,7 @@ import (
 	"sync"
 )
 
-func runCmd(cmd *exec.Cmd, cmdDir string) error {
+func RunCmd(cmd *exec.Cmd, cmdDir string) error {
 	currentWorkingDirectory, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)

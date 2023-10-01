@@ -22,7 +22,15 @@ func main() {
 	mux.HandleFunc("/edit", handlers.Edit)
 	mux.HandleFunc("/stitchOneSecondVideos", handlers.StitchOneSecondVideos)
 	mux.HandleFunc("/listCommittedFiles", handlers.ListCommittedFiles)
+	mux.HandleFunc("/writeScriptToFile", handlers.WriteScriptToFile)
+	mux.HandleFunc("/generateFSVids", handlers.GenerateFSVid)
+	mux.HandleFunc("/getFSVids", handlers.GetFSVid)
+	mux.HandleFunc("/editFSVidScript", handlers.EditFSVidScript)
+	mux.HandleFunc("/deleteFSVid", handlers.DeleteFSVid)
+	mux.HandleFunc("/commitFinalVid", handlers.CommitFinalVid)
+
 	log.Printf("Starting server on %s\n", DEFAULT_PORT)
+
 	err := http.ListenAndServe(DEFAULT_PORT, mux)
 	log.Fatal(err)
 }
