@@ -21,4 +21,12 @@ renderButton.addEventListener("click", async function () {
 
     finalVid.appendChild(source);
     finalVid.appendChild(fallbackText);
+
+    const scriptingSection = document.querySelector("section.scripting-space")
+
+    while (scriptingSection.lastElementChild !== scriptingSection.querySelector("section.main-ui-options")) {
+        scriptingSection.removeChild(scriptingSection.lastElementChild);
+    }
+
+    scriptingSection.appendChild(finalVid)
 })
