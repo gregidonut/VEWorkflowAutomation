@@ -64,6 +64,7 @@ func CombineFSVidWithTTSAudio() error {
 }
 
 func GenerateTTS(lastVidFileMP4 string) error {
+	fmt.Println("contacting aws..")
 	sess := session.Must(session.NewSessionWithOptions(session.Options{
 		SharedConfigState: session.SharedConfigEnable,
 	}))
