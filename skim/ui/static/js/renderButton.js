@@ -14,7 +14,7 @@ renderButton.addEventListener("click", async function () {
     finalVid.controls = true;
 
     const source = document.createElement('source');
-    source.src = `/static/uploads/workspace/actualCommitVids/${finalVideoData.vBasePath}?timestamp=${finalVideoData.lastModified}`;
+    source.src = `/static/uploads/workspace/finalVid/${finalVideoData.vBasePath}?timestamp=${finalVideoData.lastModified}`;
     source.type = 'video/mp4';
 
     const fallbackText = document.createTextNode('Your browser does not support the video tag.');
