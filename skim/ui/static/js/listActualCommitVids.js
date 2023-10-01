@@ -83,7 +83,7 @@ async function fetchActualCommitVidFiles() {
         delBtn.className = "commit-vid-delete-btn"
         delBtn.innerHTML = `<img src="/static/assets/delIcon.svg" alt="edit-icon" width="20px"/>`
         delBtn.querySelector("img").addEventListener("click", function () {
-            console.log(fsVid.vBasePath)
+            editDialog.setAttribute("fsVid-prop", JSON.stringify(fsVid))
             deleteDialog.showModal()
         })
 
