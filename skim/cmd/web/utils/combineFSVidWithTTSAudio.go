@@ -74,6 +74,7 @@ func GenerateTTS(lastVidFileMP4 string) error {
 	scriptPath := fmt.Sprintf("%s/%s.txt", paths.RAW_COMMIT_VIDS_REL_PATH, lastVidBaseName)
 	textBytes, err := os.ReadFile(scriptPath)
 	if err != nil {
+		fmt.Printf("%v:%v\n", generateTTSErr, err)
 		return fmt.Errorf("%v:%v", generateTTSErr, err)
 	}
 
@@ -85,6 +86,7 @@ func GenerateTTS(lastVidFileMP4 string) error {
 
 	output, err := svc.SynthesizeSpeech(input)
 	if err != nil {
+		fmt.Printf("%v:%v\n", generateTTSErr, err)
 		return fmt.Errorf("%v:%v", generateTTSErr, err)
 	}
 
@@ -93,6 +95,7 @@ func GenerateTTS(lastVidFileMP4 string) error {
 	audioPath := fmt.Sprintf("%s/%s.mp3", paths.RAW_COMMIT_VIDS_REL_PATH, lastVidBaseName)
 	err = saveAudioToFile(audioStream, audioPath)
 	if err != nil {
+		fmt.Printf("%v:%v\n", generateTTSErr, err)
 		return fmt.Errorf("%v:%v", generateTTSErr, err)
 	}
 	return nil
