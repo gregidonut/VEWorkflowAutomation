@@ -27,6 +27,7 @@ func main() {
 	mux.HandleFunc("/getFSVids", handlers.GetFSVid)
 	mux.HandleFunc("/editFSVidScript", handlers.EditFSVidScript)
 	mux.HandleFunc("/deleteFSVid", handlers.DeleteFSVid)
+	mux.HandleFunc("/commitFinalVid", handlers.CommitFinalVid)
 
 	log.Printf("Starting server on %s\n", DEFAULT_PORT)
 

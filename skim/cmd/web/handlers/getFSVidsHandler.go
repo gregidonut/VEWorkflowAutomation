@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"encoding/json"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/fsvid"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
 	"net/http"
 	"os"
 )
@@ -15,12 +15,13 @@ func GetFSVid(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fsVids, err := utils.GenerateFsVidList()
+	fsVids, err := fsvid.GenerateFsVidList()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+
 	json.NewEncoder(w).Encode(fsVids)
 }

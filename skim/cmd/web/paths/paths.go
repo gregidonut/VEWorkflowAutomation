@@ -7,4 +7,5 @@ const (
 	WORKSPACE_REL_PATH       = "skim/ui/static/uploads/workspace"
 	RAW_COMMIT_VIDS_REL_PATH = "skim/ui/static/uploads/workspace/rawCommitVids"
 	FSVIDS_REL_PATH          = "skim/ui/static/uploads/workspace/actualCommitVids"
+	FINAL_VID_PATH           = "skim/ui/static/uploads/workspace/finalVid/finalVid.mp4"
 )
