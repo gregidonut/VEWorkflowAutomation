@@ -184,6 +184,7 @@
                 }
 
                 dialog#edit-dialog button.close-edit-dialog-btn,
+                dialog#delete-dialog button.close-delete-dialog-btn,
                 dialog#scripting-dialog button.close-scripting-dialog-btn {
                     position: absolute;
                     top: 0;
@@ -194,6 +195,7 @@
                 }
 
                 dialog#edit-dialog form h3,
+                dialog#delete-dialog form h3,
                 dialog#scripting-dialog form h3 {
                     font-size: 1.5rem;
                 }
@@ -228,17 +230,17 @@
                     <label for="edit-dialog-submit"></label>
                     <input type="submit" value="Submit" id="edit-dialog-submit">
                 </form>
-                <dialog id="delete-dialog">
-                    <button class="close-delete-dialog-btn">x</button>
-                    <form
-                            action=""
-                            method="post"
-                            onsubmit="deleteScript(); return false;">
-                        <h3><label for="new-script">Are you sure you want to delete?</label></h3>
-                        <br>
-                        <input type="submit" value="Confirm" id="delete-dialog-confirm">
-                    </form>
-                </dialog>
+            </dialog>
+            <dialog id="delete-dialog">
+                <button class="close-delete-dialog-btn">x</button>
+                <form
+                        action=""
+                        method="post"
+                        onsubmit="deleteScript(); return false;">
+                    <h3><label for="delete-dialog-confirm">Are you sure you want to delete?</label></h3>
+                    <br>
+                    <input type="submit" value="Confirm" id="delete-dialog-confirm">
+                </form>
             </dialog>
         </section>
     </div>
@@ -247,9 +249,5 @@
     <script src="/static/js/submitScript.js"></script>
     <script src="/static/js/listActualCommitVids.js"></script>
     <script src="/static/js/editScript.js"></script>
-    <script>
-        for (let i = 0; i < 20; i++) {
-            console.log(Date.now())
-        }
-    </script>
+    <script src="/static/js/deleteScript.js"></script>
 {{end}}

@@ -1,4 +1,5 @@
 const editDialog = document.querySelector("#edit-dialog")
+const deleteDialog = document.querySelector("#delete-dialog")
 
 let currentActualCommitVids = []
 
@@ -83,6 +84,7 @@ async function fetchActualCommitVidFiles() {
         delBtn.innerHTML = `<img src="/static/assets/delIcon.svg" alt="edit-icon" width="20px"/>`
         delBtn.querySelector("img").addEventListener("click", function () {
             console.log(fsVid.vBasePath)
+            deleteDialog.showModal()
         })
 
         scriptSectionCtrls.appendChild(editBtn)
@@ -106,6 +108,11 @@ setInterval(fetchActualCommitVidFiles, 1000)
 const editDialogCloseBtn = document.querySelector("button.close-edit-dialog-btn")
 editDialogCloseBtn.addEventListener("click", () => {
     editDialog.close()
+})
+
+const deleteDialogCloseBtn = document.querySelector("button.close-delete-dialog-btn")
+deleteDialogCloseBtn.addEventListener("click", () => {
+    deleteDialog.close()
 })
 
 function arraysAreEqualByLastModified(array1, array2) {

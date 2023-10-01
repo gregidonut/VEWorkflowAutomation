@@ -1,5 +1,3 @@
-const afterEdit = true;
-
 function editScript() {
     const fsVidProp = editDialog.getAttribute('fsVid-prop')
     const fsVid = JSON.parse(fsVidProp)
