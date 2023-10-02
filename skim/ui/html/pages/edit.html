@@ -1,257 +1,288 @@
 {{define "title"}}edit{{end}}
 {{define "main"}}
+<style>
+    div.edit-space {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<div class="edit-space">
     <style>
-        div.edit-space {
+        section.initial-timeline {
             display: flex;
             flex-direction: column;
-            width: 100%;
-            height: 100%;
+            overflow-x: auto;
+            padding: 20px 20px;
+            background-color: #ffffff13;
+        }
 
-            padding-left: 10rem;
-            position: relative;
+        .initial-timeline::-webkit-scrollbar {
+            height: 10px;
+            background-color: #ffffff2a;
+        }
+
+        .initial-timeline::-webkit-scrollbar-thumb {
+            background-color: #ffffff91;
+            border-radius: 5px;
         }
     </style>
-    <div class="edit-space">
+    <section class="initial-timeline">
         <style>
-            section.initial-timeline {
+            ul.vid-files-list {
                 display: flex;
-                flex-direction: column;
-                overflow-x: auto;
+                flex-direction: row;
+                gap: 1rem;
+
+                list-style: none;
             }
-        </style>
-        <section class="initial-timeline">
-            <style>
-                ul.vid-files-list {
-                    display: flex;
-                    flex-direction: row;
-                    gap: 1rem;
 
-                    list-style: none;
-                }
-
-                button.initial-timeline-select-btn {
-                    width: min-content;
-                    padding: 1rem;
-                    font-size: 2rem;
-                    margin-left: 1rem;
-                    margin-top: 1rem;
-
-                    position: absolute;
-                    left: 0;
-                }
-            </style>
-            <div>
-                <ul class="vid-files-list">
-                    {{range .SplitVidFilePaths}}
-                        <li>
-                            <style>
-                                div.vid-wrapper {
-                                    padding: 1rem;
-                                    background: aqua;
-                                }
-                            </style>
-                            <div class="vid-wrapper">
-                                <video
-                                        width="128"
-                                        controls
-                                        autoplay
-                                        loop
-                                        muted
-                                >
-                                    <source src="{{.}}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                            </div>
-                        </li>
-                    {{end}}
-                </ul>
-            </div>
-            <button class="initial-timeline-select-btn">select</button>
-        </section>
-
-        <style>
-            section.committed-timeline {
-                display: flex;
-                flex-direction: column;
-                overflow-x: auto;
-            }
-        </style>
-        <section class="committed-timeline">
-            <style>
-                ul.committed-vid-files-list {
-                    display: flex;
-                    flex-direction: row;
-                    gap: 1rem;
-
-                    list-style: none;
-                }
-
-                ul.committed-vid-files-list div.commit-vid-wrapper {
-                    background: #834a4a;
-
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-
-                    height: 100%;
-                    width: 256px;
-                }
-
-                ul.committed-vid-files-list li div.commit-vid-wrapper div {
-                    color: antiquewhite;
-                    font-size: 1.5rem;
-                    padding: .7rem;
-                    flex-grow: 1;
-
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: end;
-                    width: 100%;
-                    gap: 1rem;
-
-                    min-height: 8rem;
-
-                    position: relative;
-                }
-
-                ul.committed-vid-files-list li div.commit-vid-wrapper div div {
-                    position: absolute;
-                    left: 0;
-
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: 1rem;
-                    width: auto;
-                }
-
-                ul.committed-vid-files-list li div.commit-vid-wrapper div div button.script-edit-btn {
-                    background-color: #420042;
-                    border-radius: 51%;
-                }
-
-                ul.committed-vid-files-list li div.commit-vid-wrapper div div button.commit-vid-delete-btn {
-                    background-color: #ff0000;
-                    border-radius: 51%;
-                }
-
-                ul.committed-vid-files-list li div.commit-vid-wrapper div div button.script-edit-btn img:active,
-                ul.committed-vid-files-list li div.commit-vid-wrapper div div button.commit-vid-delete-btn img:active {
-                    width: 15px;
-                }
-
-                ul.committed-vid-files-list li div.commit-vid-wrapper div p.script-text {
-                    width: 80%;
-                }
-            </style>
-            <ul class="committed-vid-files-list"></ul>
-        </section>
-
-        <style>
-            section.scripting-space {
-                background: pink;
-                flex-grow: 1;
-
-                display: flex;
-                flex-direction: column;
-            }
-        </style>
-        <section class="scripting-space">
-            <section class="main-ui-options">
-                <button>Render</button>
-            </section>
-        </section>
-        <style>
-            dialog#edit-dialog,
-            dialog#scripting-dialog,
-            dialog#delete-dialog {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background-color: slategrey;
-                padding: 2rem;
-                border: .1rem solid #ccc;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                width: 80rem;
+            .initial-timeline-select-btn-container {
                 text-align: center;
-                color: black;
-
-                position: relative;
             }
 
-            dialog::backdrop {
-                background-color: black;
-                opacity: 0.5;
-            }
-
-            dialog#edit-dialog button.close-edit-dialog-btn,
-            dialog#delete-dialog button.close-delete-dialog-btn,
-            dialog#scripting-dialog button.close-scripting-dialog-btn {
-                position: absolute;
-                top: 0;
-                right: 0;
-
-                padding: 1rem;
-                margin: 1rem;
-            }
-
-            dialog#edit-dialog form h3,
-            dialog#delete-dialog form h3,
-            dialog#scripting-dialog form h3 {
-                font-size: 1.5rem;
-            }
-
-            dialog#edit-dialog form textarea,
-            dialog#scripting-dialog form textarea {
-                width: 100%;
+            .initial-timeline-select-btn {
+                width: max-content;
+                padding: 8px 20px;
+                border-radius: 5px;
+                background-color: #ffffff21;
+                margin: 20px 0px;
+                font-size: 16px;
             }
         </style>
-        <dialog id="scripting-dialog">
-            <button class="close-scripting-dialog-btn">x</button>
-            <form
-                    action=""
-                    method="post"
-                    onsubmit="submitScript(); return false;">
-                <h3><label for="script">Add a script</label></h3>
-                <textarea id="script" name="script" rows="8" cols="5"></textarea>
-                <br>
-                <label for="scripting-dialog-submit"></label>
-                <input type="submit" value="Submit" id="scripting-dialog-submit">
-            </form>
-        </dialog>
-        <dialog id="edit-dialog">
-            <button class="close-edit-dialog-btn">x</button>
-            <form
-                    action=""
-                    method="post"
-                    onsubmit="editScript(); return false;">
-                <h3><label for="new-script">edit the script</label></h3>
-                <textarea id="new-script" name="new-script" rows="8" cols="5"></textarea>
-                <br>
-                <label for="edit-dialog-submit"></label>
-                <input type="submit" value="Submit" id="edit-dialog-submit">
-            </form>
-        </dialog>
-        <dialog id="delete-dialog">
-            <button class="close-delete-dialog-btn">x</button>
-            <form
-                    action=""
-                    method="post"
-                    onsubmit="deleteScript(); return false;">
-                <h3><label for="delete-dialog-confirm">Are you sure you want to delete?</label></h3>
-                <br>
-                <input type="submit" value="Confirm" id="delete-dialog-confirm">
-            </form>
-        </dialog>
+        <div>
+            <ul class="vid-files-list">
+                {{range .SplitVidFilePaths}}
+                <li>
+                    <style>
+                        div.vid-wrapper {
+                            padding: 5px;
+                            background: #919191;
+                        }
+                    </style>
+                    <div class="vid-wrapper">
+                        <video width="128" controls autoplay loop muted>
+                            <source src="{{.}}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </li>
+                {{end}}
+            </ul>
+        </div>
+    </section>
+    <div class="initial-timeline-select-btn-container">
+        <button class="initial-timeline-select-btn">Add Script</button>
     </div>
-    <script src="/static/js/stitchVids.js"></script>
-    <script src="/static/js/listRawCommitVids.js"></script>
-    <script src="/static/js/submitScript.js"></script>
-    <script src="/static/js/listActualCommitVids.js"></script>
-    <script src="/static/js/editScript.js"></script>
-    <script src="/static/js/deleteScript.js"></script>
-    <script src="/static/js/renderButton.js"></script>
+
+    <style>
+        section.committed-timeline {
+            display: flex;
+            flex-direction: column;
+            overflow-x: auto;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: #333333;
+        }
+    </style>
+    <section class="committed-timeline">
+        <style>
+            ul.committed-vid-files-list {
+                display: flex;
+                flex-direction: row;
+                gap: 20px;
+                list-style: none;
+            }
+
+            ul.committed-vid-files-list div.commit-vid-wrapper {
+                background: #ffffff10;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                width: 256px;
+                border-radius: 5px;
+                overflow: hidden;
+                box-shadow: 0px 0px 4px rgb(0, 0, 0);
+            }
+
+            ul.committed-vid-files-list li div.commit-vid-wrapper div {
+                color: antiquewhite;
+                /* flex-grow: 1; */
+                display: flex;
+                width: 100%;
+                gap: 1rem;
+                height: 8rem;
+            }
+
+            ul.committed-vid-files-list li div.commit-vid-wrapper div div {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: fit-content;
+                justify-content: space-between;
+                padding: 20px 10px;
+                background: #00000049;
+            }
+
+            ul.committed-vid-files-list li div.commit-vid-wrapper div div button.script-edit-btn {
+                border-radius: 5px;
+                padding: 2px;
+                border: none;
+            }
+
+            ul.committed-vid-files-list li div.commit-vid-wrapper div div button.commit-vid-delete-btn {
+                border-radius: 5px;
+                padding: 2px;
+                border: none;
+            }
+
+            ul.committed-vid-files-list li div.commit-vid-wrapper div div button.script-edit-btn:active,
+            ul.committed-vid-files-list li div.commit-vid-wrapper div div button.commit-vid-delete-btn:active {
+                scale: 0.9;
+            }
+
+            ul.committed-vid-files-list li div.commit-vid-wrapper div p.script-text {
+                padding: 20px 0px;
+                height: 100%;
+                flex-grow: 1;
+                overflow-y: auto;
+            }
+
+            .script-text::-webkit-scrollbar {
+                width: 5px;
+                background-color: #ffffff2a;
+            }
+
+            .script-text::-webkit-scrollbar-thumb {
+                border-radius: 5px;
+                background-color: #ffffff91;
+            }
+        </style>
+        <ul class="committed-vid-files-list"></ul>
+    </section>
+
+    <style>
+        section.scripting-space {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .main-ui-options button {
+            width: max-content;
+            padding: 8px 20px;
+            border-radius: 5px;
+            background-color: #ffffff21;
+            margin: 20px 0px;
+            font-size: 16px;
+        }
+    </style>
+    <section class="scripting-space">
+        <section class="main-ui-options">
+            <button>Render</button>
+        </section>
+    </section>
+    <style>
+        dialog#edit-dialog,
+        dialog#scripting-dialog,
+        dialog#delete-dialog {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #474747;
+            padding: 2rem;
+            border: .1rem solid #ccc;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 80rem;
+            text-align: center;
+            color: black;
+
+            position: relative;
+        }
+
+        dialog::backdrop {
+            background-color: black;
+            opacity: 0.5;
+        }
+
+        dialog#edit-dialog button.close-edit-dialog-btn,
+        dialog#delete-dialog button.close-delete-dialog-btn,
+        dialog#scripting-dialog button.close-scripting-dialog-btn {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            background-color: #0000004b;
+            margin: 1rem;
+            font-size: 16px;
+        }
+
+        dialog#edit-dialog form h3,
+        dialog#delete-dialog form h3,
+        dialog#scripting-dialog form h3 {
+            font-size: 1.5rem;
+            padding: 10px 0px;
+        }
+
+        dialog#edit-dialog form textarea,
+        dialog#scripting-dialog form textarea {
+            width: 100%;
+            background-color: #00000086;
+        }
+
+        #scripting-dialog-submit,
+        #edit-dialog-submit,
+        #delete-dialog-submit {
+            width: max-content;
+            padding: 8px 20px;
+            border-radius: 5px;
+            background-color: #0000004b;
+            margin: 20px 0px;
+            font-size: 16px;
+        }
+    </style>
+    <dialog id="scripting-dialog">
+        <button class="close-scripting-dialog-btn">x</button>
+        <form action="" method="post" onsubmit="submitScript(); return false;">
+            <h3><label for="script">Add a script</label></h3>
+            <textarea id="script" name="script" rows="8" cols="5"></textarea>
+            <br>
+            <label for="scripting-dialog-submit"></label>
+            <input type="submit" value="Submit" id="scripting-dialog-submit">
+        </form>
+    </dialog>
+    <dialog id="edit-dialog">
+        <button class="close-edit-dialog-btn">x</button>
+        <form action="" method="post" onsubmit="editScript(); return false;">
+            <h3><label for="new-script">edit the script</label></h3>
+            <textarea id="new-script" name="new-script" rows="8" cols="5"></textarea>
+            <br>
+            <label for="edit-dialog-submit"></label>
+            <input type="submit" value="Submit" id="edit-dialog-submit">
+        </form>
+    </dialog>
+    <dialog id="delete-dialog">
+        <button class="close-delete-dialog-btn">x</button>
+        <form action="" method="post" onsubmit="deleteScript(); return false;">
+            <h3><label for="delete-dialog-confirm">Are you sure you want to delete?</label></h3>
+            <br>
+            <input type="submit" value="Confirm" id="delete-dialog-confirm">
+        </form>
+    </dialog>
+</div>
+<script src="/static/js/stitchVids.js"></script>
+<script src="/static/js/listRawCommitVids.js"></script>
+<script src="/static/js/submitScript.js"></script>
+<script src="/static/js/listActualCommitVids.js"></script>
+<script src="/static/js/editScript.js"></script>
+<script src="/static/js/deleteScript.js"></script>
+<script src="/static/js/renderButton.js"></script>
 {{end}}
