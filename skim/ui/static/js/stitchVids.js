@@ -28,7 +28,7 @@ document.addEventListener("mouseup", function () {
 
 function toggleSelection(element) {
     if (element.style.backgroundColor === COLOR_BLUE) {
-        element.style.backgroundColor = COLOR_AQUA;
+        element.style.backgroundColor = '';
         const index = selectedElements.indexOf(element);
         if (index > -1) {
             selectedElements.splice(index, 1);
@@ -44,7 +44,7 @@ function toggleSelection(element) {
     selectedElements.push(element);
 }
 
-let button = document.querySelector("section.initial-timeline button.initial-timeline-select-btn");
+const button = document.querySelector(".initial-timeline-select-btn");
 button.addEventListener("click", function () {
     selectedElements.forEach(function (e) {
         e.style.backgroundColor = COLOR_GREY;

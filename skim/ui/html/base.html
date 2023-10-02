@@ -29,6 +29,7 @@
             /* border: 1px solid white; */
             display: flex;
             justify-content: center;
+            padding: 0px 5vw;
         }
 
         header{
@@ -49,7 +50,14 @@
 <body>
     <header>
         <h1><a href="/">Skim</a></h1>
-        <p>Upload the video that you want to mess around with...</p>
+        <p id="si_01"></p>
+        <script>
+            if (window.location.pathname == '/edit') {
+                si_01.innerText = `Select the video clip you want to add script to...`
+            } else {
+                si_01.innerText = `Upload the video that you want to mess around with...`
+            }
+        </script>
     </header>
     <main>
         {{template "main" .}}
