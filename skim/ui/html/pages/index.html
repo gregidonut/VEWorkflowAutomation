@@ -1,29 +1,52 @@
 {{define "title"}}home{{end}}
 {{define "main"}}
-    <style>
-        form {
-            width: 100%;
+<style>
+    form {
+        width: 700px;
+        border: 2px solid #616161;
+        border-radius: 10px;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            background: aliceblue;
-            margin: 2rem;
-            padding: 2rem 0;
-        }
+    #input-file {
+        border: 1px solid #ffffff20;
+        background-color: #ffffff10;
+        padding: 10px;
+        border-radius: 5px;
+        width: 100%;
+    }
 
-        form input {
-            font-size: 4rem;
-        }
+    #input-file::-webkit-file-upload-button {
+        border: none;
+        border-radius: 5px;
+        background-color: #ffffff30;
+        color: white;
+        padding: 10px 20px;
+        margin-right: 20px;
+    }
 
-        form input#input-file {
-            width: 50rem;
-        }
-    </style>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" id="input-file" name="filename">
-        <br>
-        <input type="submit">
-    </form>
+    .submit-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .submit {
+        color: #d4d4d4;
+        background-color: #ffffff0a;
+        border: 1px solid #ffffff41;
+        border-radius: 5px;
+        font-size: 17px;
+        padding: 5px 15px;
+        width: fit-content;
+    }
+</style>
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" id="input-file" name="filename">
+    <div class="submit-container">
+        <input class="submit" type="submit">
+    </div>
+</form>
 {{end}}
