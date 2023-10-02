@@ -17,7 +17,7 @@ vidElements.forEach(function (e) {
 
     e.addEventListener("mouseover", function () {
         if (isMouseDown) {
-            toggleSelection(e);
+            toggleSelection(e)
         }
     });
 });
