@@ -37,7 +37,8 @@
 
                 list-style: none;
             }
-            .initial-timeline-select-btn-container{
+
+            .initial-timeline-select-btn-container {
                 text-align: center;
             }
 
@@ -191,7 +192,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: slategrey;
+            background-color: #474747;
             padding: 2rem;
             border: .1rem solid #ccc;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -213,20 +214,39 @@
             position: absolute;
             top: 0;
             right: 0;
-
-            padding: 1rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            background-color: #0000004b;
             margin: 1rem;
+            font-size: 16px;
         }
 
         dialog#edit-dialog form h3,
         dialog#delete-dialog form h3,
         dialog#scripting-dialog form h3 {
             font-size: 1.5rem;
+            padding: 10px 0px;
         }
 
         dialog#edit-dialog form textarea,
         dialog#scripting-dialog form textarea {
             width: 100%;
+            background-color: #00000086;
+        }
+
+        #scripting-dialog-submit,
+        #edit-dialog-submit,
+        #delete-dialog-submit {
+            width: max-content;
+            padding: 8px 20px;
+            border-radius: 5px;
+            background-color: #0000004b;
+            margin: 20px 0px;
+            font-size: 16px;
         }
     </style>
     <dialog id="scripting-dialog">
