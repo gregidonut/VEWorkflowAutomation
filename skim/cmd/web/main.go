@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/controller/application"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"log"
@@ -18,23 +19,33 @@ func main() {
 		log.Fatal(err)
 	}
 
+	app.Logger.Info("starting FileServer at /static")
 	fileServer := http.FileServer(http.Dir(paths.STATIC_REL_PATH))
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
-	mux.HandleFunc("/", app.Index)
-	mux.HandleFunc("/upload", app.UploadFile)
-	mux.HandleFunc("/edit", app.Edit)
-	mux.HandleFunc("/stitchOneSecondVideos", app.StitchOneSecondVideos)
-	mux.HandleFunc("/listCommittedFiles", app.ListCommittedFiles)
-	mux.HandleFunc("/writeScriptToFile", app.WriteScriptToFile)
-	mux.HandleFunc("/generateFSVids", app.GenerateFSVid)
-	mux.HandleFunc("/getFSVids", app.GetFSVid)
-	mux.HandleFunc("/editFSVidScript", app.EditFSVidScript)
-	mux.HandleFunc("/deleteFSVid", app.DeleteFSVid)
-	mux.HandleFunc("/commitFinalVid", app.CommitFinalVid)
+	for endpoint, fn := range map[string]func(w http.ResponseWriter, r *http.Request){
+		"/":                      app.Index,
+		"/upload":                app.UploadFile,
+		"/edit":                  app.Edit,
+		"/stitchOneSecondVideos": app.StitchOneSecondVideos,
+		"/listCommittedFiles":    app.ListCommittedFiles,
+		"/writeScriptToFile":     app.WriteScriptToFile,
+		"/generateFSVids":        app.GenerateFSVid,
+		"/getFSVids":             app.GetFSVid,
+		"/editFSVidScript":       app.EditFSVidScript,
+		"/deleteFSVid":           app.DeleteFSVid,
+		"/commitFinalVid":        app.CommitFinalVid,
+	} {
 
-	log.Printf("Starting server on %s\n", DEFAULT_PORT)
+		// these next two lines are the result of implementing a monkeypatch to any
+		// HandleFunc we will create(or declared in the above for loop) since we
+		// now rely on the monkey patch to expose more of the app behavior to slog
+		handler := app.NewHandlerFunc(endpoint, fn)
+		mux.HandleFunc(fmt.Sprintf("%s", endpoint), handler.HandlerFunc())
+	}
+
+	app.Logger.Debug(fmt.Sprintf("Starting server on %s", DEFAULT_PORT))
 
 	err = http.ListenAndServe(DEFAULT_PORT, mux)
-	log.Fatal(err)
+	app.Logger.Error(err.Error())
 }
