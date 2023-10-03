@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/controller/handlers"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/controller/application"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"log"
 	"net/http"
@@ -17,17 +17,17 @@ func main() {
 	fileServer := http.FileServer(http.Dir(paths.STATIC_REL_PATH))
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
-	mux.HandleFunc("/", handlers.Index)
-	mux.HandleFunc("/upload", handlers.UploadFile)
-	mux.HandleFunc("/edit", handlers.Edit)
-	mux.HandleFunc("/stitchOneSecondVideos", handlers.StitchOneSecondVideos)
-	mux.HandleFunc("/listCommittedFiles", handlers.ListCommittedFiles)
-	mux.HandleFunc("/writeScriptToFile", handlers.WriteScriptToFile)
-	mux.HandleFunc("/generateFSVids", handlers.GenerateFSVid)
-	mux.HandleFunc("/getFSVids", handlers.GetFSVid)
-	mux.HandleFunc("/editFSVidScript", handlers.EditFSVidScript)
-	mux.HandleFunc("/deleteFSVid", handlers.DeleteFSVid)
-	mux.HandleFunc("/commitFinalVid", handlers.CommitFinalVid)
+	mux.HandleFunc("/", application.Index)
+	mux.HandleFunc("/upload", application.UploadFile)
+	mux.HandleFunc("/edit", application.Edit)
+	mux.HandleFunc("/stitchOneSecondVideos", application.StitchOneSecondVideos)
+	mux.HandleFunc("/listCommittedFiles", application.ListCommittedFiles)
+	mux.HandleFunc("/writeScriptToFile", application.WriteScriptToFile)
+	mux.HandleFunc("/generateFSVids", application.GenerateFSVid)
+	mux.HandleFunc("/getFSVids", application.GetFSVid)
+	mux.HandleFunc("/editFSVidScript", application.EditFSVidScript)
+	mux.HandleFunc("/deleteFSVid", application.DeleteFSVid)
+	mux.HandleFunc("/commitFinalVid", application.CommitFinalVid)
 
 	log.Printf("Starting server on %s\n", DEFAULT_PORT)
 

@@ -1,4 +1,4 @@
-package handlers
+package application
 
 import (
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"

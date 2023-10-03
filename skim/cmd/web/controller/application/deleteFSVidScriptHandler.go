@@ -1,4 +1,4 @@
-package handlers
+package application
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func EditFSVidScript(w http.ResponseWriter, r *http.Request) {
+func DeleteFSVid(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -19,17 +19,7 @@ func EditFSVidScript(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := fsv.EditScript(); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	if err := fsv.ReplaceTTSAudio(); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	if err := fsv.CombineWithTTSAudio(); err != nil {
+	if err := fsv.Delete(); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
