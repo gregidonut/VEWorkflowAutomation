@@ -9,18 +9,19 @@ import (
 func (app *Application) DeleteFSVid(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		app.catchHandlerErr(w, nil, http.StatusMethodNotAllowed)
 		return
 	}
 
 	var fsv fsvid.FSVid
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&fsv); err != nil {
-		http.Error(w, "Invalid JSON request body", http.StatusBadRequest)
+		app.catchHandlerErr(w, err, http.StatusBadRequest)
 		return
 	}
 
 	if err := fsv.Delete(); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 

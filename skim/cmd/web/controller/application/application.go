@@ -22,6 +22,12 @@ func NewApplication() (*Application, error) {
 }
 
 func (app *Application) catchHandlerErr(w http.ResponseWriter, err error, status int) {
+	if err == nil {
+		goto logToSLog
+	}
+
 	http.Error(w, err.Error(), status)
+
+logToSLog:
 	app.Logger.Error("controller error", slog.With(err))
 }

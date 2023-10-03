@@ -12,30 +12,32 @@ func (app *Application) UploadFile(w http.ResponseWriter, r *http.Request) {
 	// Parse the multipart form data
 	err := r.ParseMultipartForm(10 << 20) // 10 MB limit
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		app.catchHandlerErr(w, err, http.StatusBadRequest)
 		return
 	}
 
 	file, handler, err := r.FormFile("filename")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 	defer file.Close()
 
 	// Ensure the directory exists, create it if necessary
 	if _, err := os.Stat(paths.UPLOADS_PATH); os.IsNotExist(err) {
-		os.Mkdir(paths.UPLOADS_PATH, os.ModeDir|os.ModePerm)
-	}
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		if err = os.Mkdir(paths.UPLOADS_PATH, os.ModeDir|os.ModePerm); err != nil {
+			app.catchHandlerErr(w, err, http.StatusInternalServerError)
+			return
+		}
+	} else if err != nil {
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 
 	// Create a new file with the same name as the original filename in the upload directory
 	uploadedFile, err := os.Create(filepath.Join(paths.UPLOADS_PATH, handler.Filename))
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 	defer uploadedFile.Close()
@@ -43,7 +45,7 @@ func (app *Application) UploadFile(w http.ResponseWriter, r *http.Request) {
 	// Copy the uploaded file data to the new file
 	_, err = io.Copy(uploadedFile, file)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 

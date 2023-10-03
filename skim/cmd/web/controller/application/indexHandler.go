@@ -19,7 +19,7 @@ func (app *Application) Index(w http.ResponseWriter, r *http.Request) {
 	if !os.IsNotExist(err) {
 		err = os.RemoveAll(paths.UPLOADS_PATH)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			app.catchHandlerErr(w, err, http.StatusInternalServerError)
 			return
 		}
 	}
@@ -31,13 +31,13 @@ func (app *Application) Index(w http.ResponseWriter, r *http.Request) {
 
 	ts, err := template.ParseFiles(files...)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 
 	err = ts.ExecuteTemplate(w, "base", nil)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 }

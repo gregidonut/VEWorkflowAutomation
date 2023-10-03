@@ -10,13 +10,13 @@ import (
 func (app *Application) CommitFinalVid(w http.ResponseWriter, r *http.Request) {
 	err := utils.FinalStep()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 
 	fv, err := finalVid.NewFinalVid()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 

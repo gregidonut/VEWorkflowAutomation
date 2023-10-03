@@ -15,29 +15,31 @@ import (
 
 func (app *Application) StitchOneSecondVideos(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		app.catchHandlerErr(w, nil, http.StatusMethodNotAllowed)
 		return
 	}
 
 	var vidPathsToStitch []string
 	err := json.NewDecoder(r.Body).Decode(&vidPathsToStitch)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		app.catchHandlerErr(w, err, http.StatusBadRequest)
 		return
 	}
 
-	_, err = os.Stat(paths.WORKSPACE_REL_PATH)
-	if os.IsNotExist(err) {
-		os.Mkdir(paths.WORKSPACE_REL_PATH, os.ModeDir|os.ModePerm)
+	if _, err = os.Stat(paths.WORKSPACE_REL_PATH); os.IsNotExist(err) {
+		if err = os.Mkdir(paths.WORKSPACE_REL_PATH, os.ModeDir|os.ModePerm); err != nil {
+			app.catchHandlerErr(w, err, http.StatusInternalServerError)
+			return
+		}
 	}
 
 	if err = generateInputFile(vidPathsToStitch); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 
 	if err = utils.StitchVids(); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 

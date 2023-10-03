@@ -23,28 +23,26 @@ func (vpas *VidPathAndScript) scriptFilePath() string {
 
 func (app *Application) WriteScriptToFile(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		app.catchHandlerErr(w, nil, http.StatusMethodNotAllowed)
 		return
 	}
 
 	var vidScript VidPathAndScript
-	err := json.NewDecoder(r.Body).Decode(&vidScript)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+	if err := json.NewDecoder(r.Body).Decode(&vidScript); err != nil {
+		app.catchHandlerErr(w, err, http.StatusBadRequest)
 		return
 	}
 
 	file, err := os.OpenFile(vidScript.scriptFilePath(), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 	defer file.Close()
 
 	// Write the text to the file
-	_, err = file.WriteString(vidScript.Script)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+	if _, err = file.WriteString(vidScript.Script); err != nil {
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 

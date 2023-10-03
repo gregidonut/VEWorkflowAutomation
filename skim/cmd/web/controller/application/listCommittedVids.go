@@ -21,7 +21,7 @@ func (app *Application) ListCommittedFiles(w http.ResponseWriter, r *http.Reques
 
 	files, err := os.ReadDir(paths.RAW_COMMIT_VIDS_REL_PATH)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 

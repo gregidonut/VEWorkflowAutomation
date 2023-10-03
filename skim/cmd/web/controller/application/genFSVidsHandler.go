@@ -7,13 +7,13 @@ import (
 
 func (app *Application) GenerateFSVid(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		app.catchHandlerErr(w, nil, http.StatusMethodNotAllowed)
 		return
 	}
 
 	err := utils.CombineFSVidWithTTSAudio()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 

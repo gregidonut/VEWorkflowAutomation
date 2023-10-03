@@ -17,7 +17,7 @@ func (app *Application) GetFSVid(w http.ResponseWriter, r *http.Request) {
 
 	fsVids, err := fsvid.GenerateFsVidList()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 

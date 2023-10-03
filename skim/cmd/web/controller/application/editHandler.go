@@ -22,7 +22,7 @@ func (app *Application) Edit(w http.ResponseWriter, r *http.Request) {
 
 	_, err := os.Stat(paths.UPLOADS_PATH)
 	if os.IsNotExist(err) {
-		http.Error(w, "uploads directory does not exist", http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 
@@ -32,7 +32,7 @@ func (app *Application) Edit(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err = utils.SplitVideo(); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 
@@ -45,7 +45,7 @@ afterSplitting:
 	var splitVidFiles []string
 	dirEntry, err := os.ReadDir(paths.SPLITVIDS_REL_PATH)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 
@@ -67,13 +67,13 @@ afterSplitting:
 
 	ts, err := template.ParseFiles(files...)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 
 	err = ts.ExecuteTemplate(w, "base", data)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
 }
