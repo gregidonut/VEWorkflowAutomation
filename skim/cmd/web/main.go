@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/handlers"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/controller/handlers"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"log"
 	"net/http"

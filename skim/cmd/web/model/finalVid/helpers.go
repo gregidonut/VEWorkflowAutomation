@@ -3,7 +3,7 @@ package finalVid
 import (
 	"bufio"
 	"fmt"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/fsvid"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/model/fsvid"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
 	"os"

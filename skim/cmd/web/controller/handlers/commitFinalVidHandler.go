@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/finalVid"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/model/finalVid"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
 	"net/http"
 )

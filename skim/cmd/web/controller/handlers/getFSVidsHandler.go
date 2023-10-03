@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/fsvid"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/model/fsvid"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"net/http"
 	"os"
