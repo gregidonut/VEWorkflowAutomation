@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func ListCommittedFiles(w http.ResponseWriter, r *http.Request) {
+func (app *Application) ListCommittedFiles(w http.ResponseWriter, r *http.Request) {
 	var fileNames []string
 	w.Header().Set("Content-Type", "application/json")
 

@@ -14,7 +14,7 @@ type templateData struct {
 	SplitVidFilePaths []string
 }
 
-func Edit(w http.ResponseWriter, r *http.Request) {
+func (app *Application) Edit(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/edit" {
 		http.NotFound(w, r)
 		return

@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func Index(w http.ResponseWriter, r *http.Request) {
+func (app *Application) Index(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return

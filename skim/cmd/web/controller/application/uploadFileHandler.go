@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 )
 
-func UploadFile(w http.ResponseWriter, r *http.Request) {
+func (app *Application) UploadFile(w http.ResponseWriter, r *http.Request) {
 	// Parse the multipart form data
 	err := r.ParseMultipartForm(10 << 20) // 10 MB limit
 	if err != nil {

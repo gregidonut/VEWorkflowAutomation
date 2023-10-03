@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func GetFSVid(w http.ResponseWriter, r *http.Request) {
+func (app *Application) GetFSVid(w http.ResponseWriter, r *http.Request) {
 	_, err := os.Stat(paths.FSVIDS_REL_PATH)
 	if os.IsNotExist(err) {
 		json.NewEncoder(w).Encode(nil)

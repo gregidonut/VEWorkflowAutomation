@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func CommitFinalVid(w http.ResponseWriter, r *http.Request) {
+func (app *Application) CommitFinalVid(w http.ResponseWriter, r *http.Request) {
 	err := utils.FinalStep()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

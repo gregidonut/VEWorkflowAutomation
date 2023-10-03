@@ -21,7 +21,7 @@ func (vpas *VidPathAndScript) scriptFilePath() string {
 
 }
 
-func WriteScriptToFile(w http.ResponseWriter, r *http.Request) {
+func (app *Application) WriteScriptToFile(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
