@@ -63,3 +63,17 @@ func (app *Application) catchHandlerErr(w http.ResponseWriter, err error, status
 logToSLog:
 	app.Logger.Error("controller error", slog.With(err))
 }
+
+// implementing the appInterFace for logging
+
+func (app *Application) Debug(s string, args ...string) {
+	app.Logger.Debug(s, args)
+}
+
+func (app *Application) Info(s string, args ...string) {
+	app.Logger.Info(s, args)
+}
+
+func (app *Application) Warning(s string, args ...string) {
+	app.Logger.Warn(s, args)
+}
