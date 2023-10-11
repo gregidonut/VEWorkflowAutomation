@@ -13,6 +13,10 @@ func (app *Application) Index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	app.copyUploadFileProgressMutex.Lock()
+	app.copyUploadFileProgressPercentage = 0
+	app.copyUploadFileProgressMutex.Unlock()
+
 	w.Header().Set("Clear-Site-Data", `"cache"`)
 
 	_, err := os.Stat(paths.UPLOADS_PATH)
