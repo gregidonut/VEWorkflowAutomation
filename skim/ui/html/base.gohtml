@@ -1,0 +1,71 @@
+{{define "base"}}
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>skim - {{template "title" .}}</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Josefin+Sans:wght@100;200;300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Mukta:wght@200;300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                text-decoration: none;
+                color: white;
+                font-family: inter;
+            }
+
+            body {
+                min-height: 100vh;
+                background-color: #151515;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 70px;
+            }
+
+            main {
+                /* border: 1px solid white; */
+                display: flex;
+                justify-content: center;
+                padding: 0px 5vw;
+            }
+
+            header {
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 40px;
+            }
+
+            #si_01 {
+                color: #9e9e9e;
+                margin-top: 20px;
+            }
+
+
+        </style>
+    </head>
+
+    <body>
+    <header>
+        <h1><a href="/">Skim</a></h1>
+        <p id="si_01"></p>
+        <script>
+            if (window.location.pathname == '/edit') {
+                si_01.innerText = `Select the video clip you want to add script to...`
+            } else {
+                si_01.innerText = `Upload the video that you want to mess around with...`
+            }
+        </script>
+    </header>
+    <main>
+        {{template "main" .}}
+    </main>
+    </body>
+
+    </html>
+{{end}}

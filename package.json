@@ -1,0 +1,21 @@
+{
+    "name": "veworkflowautomation",
+    "version": "0.1.0",
+    "description": "An automation project where we aim to be able to create a full generator of A.I. generated content.",
+    "main": "skim/ui/static/dist/index.js",
+    "scripts": {
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "Gregory Babajide V. Osilaja",
+    "license": "ISC",
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^6.7.5",
+        "@typescript-eslint/parser": "^6.7.5",
+        "eslint": "^8.51.0",
+        "prettier": "^3.0.3",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.2.2"
+    }
+}

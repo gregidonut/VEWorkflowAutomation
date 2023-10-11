@@ -25,8 +25,8 @@ func (app *Application) Index(w http.ResponseWriter, r *http.Request) {
 	}
 
 	files := []string{
-		"./skim/ui/html/base.html",
-		"./skim/ui/html/pages/index.html",
+		"./skim/ui/html/base.gohtml",
+		"./skim/ui/html/pages/index.gohtml",
 	}
 
 	ts, err := template.ParseFiles(files...)
