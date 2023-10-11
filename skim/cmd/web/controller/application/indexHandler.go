@@ -13,9 +13,9 @@ func (app *Application) Index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	app.copyUploadFileProgressMutex.Lock()
-	app.copyUploadFileProgressPercentage = 0
-	app.copyUploadFileProgressMutex.Unlock()
+	app.CopyUploadFileProgressMutex.Lock()
+	app.CopyUploadFileProgressPercentage = 0
+	app.CopyUploadFileProgressMutex.Unlock()
 
 	w.Header().Set("Clear-Site-Data", `"cache"`)
 

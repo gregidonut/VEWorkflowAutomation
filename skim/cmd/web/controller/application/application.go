@@ -10,8 +10,8 @@ import (
 // Application is the main applicationOld object
 type Application struct {
 	Logger                           *slog.Logger
-	copyUploadFileProgressPercentage int64
-	copyUploadFileProgressMutex      sync.Mutex
+	CopyUploadFileProgressPercentage int64
+	CopyUploadFileProgressMutex      sync.Mutex
 }
 
 // HandlerFuncWrapper is needed to ultimately append and/or prepend logic to
@@ -67,16 +67,23 @@ logToSLog:
 	app.Logger.Error("controller error", slog.With(err))
 }
 
-// implementing the appInterFace for logging
+// implementing the appInterFace for logging and accessing some fields
 
-func (app *Application) Debug(s string, args ...string) {
-	app.Logger.Debug(s, args)
+func (app *Application) Debug(msg string) {
+	app.Logger.Debug(msg)
 }
 
-func (app *Application) Info(s string, args ...string) {
-	app.Logger.Info(s, args)
+func (app *Application) Info(msg string) {
+	app.Logger.Info(msg)
 }
 
-func (app *Application) Warning(s string, args ...string) {
-	app.Logger.Warn(s, args)
+func (app *Application) Warning(msg string) {
+	app.Logger.Warn(msg)
+}
+
+func (app *Application) CpUploadFileProgressPercentage(percentage int64) int64 {
+	app.CopyUploadFileProgressMutex.Lock()
+	app.CopyUploadFileProgressPercentage = percentage
+	defer app.CopyUploadFileProgressMutex.Unlock()
+	return app.CopyUploadFileProgressPercentage
 }
