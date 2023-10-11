@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/controller/applicationOld"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/controller/application"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"log"
 	"net/http"
@@ -14,7 +14,7 @@ const (
 
 func main() {
 	mux := http.NewServeMux()
-	app, err := applicationOld.NewApplication()
+	app, err := application.NewApplication()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -24,17 +24,8 @@ func main() {
 	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
 	for endpoint, fn := range map[string]func(w http.ResponseWriter, r *http.Request){
-		"/":                      app.Index,
-		"/upload":                app.UploadFile,
-		"/edit":                  app.Edit,
-		"/stitchOneSecondVideos": app.StitchOneSecondVideos,
-		"/listCommittedFiles":    app.ListCommittedFiles,
-		"/writeScriptToFile":     app.WriteScriptToFile,
-		"/generateFSVids":        app.GenerateFSVid,
-		"/getFSVids":             app.GetFSVid,
-		"/editFSVidScript":       app.EditFSVidScript,
-		"/deleteFSVid":           app.DeleteFSVid,
-		"/commitFinalVid":        app.CommitFinalVid,
+		"/":       app.Index,
+		"/upload": app.UploadFile,
 	} {
 
 		// these next two lines are the result of implementing a monkeypatch to any
