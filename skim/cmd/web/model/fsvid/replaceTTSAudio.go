@@ -2,14 +2,14 @@ package fsvid
 
 import (
 	"fmt"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utilsOld"
 	"os"
 	"os/exec"
 	"strings"
 )
 
 func (fsv *FSVid) ReplaceTTSAudio() error {
-	if err := utils.GenerateTTS(fsv.VBasePath); err != nil {
+	if err := utilsOld.GenerateTTS(fsv.VBasePath); err != nil {
 		return err
 	}
 
@@ -26,7 +26,7 @@ func (fsv *FSVid) ReplaceTTSAudio() error {
 		"22",
 		tempFileName,
 	)
-	if err := utils.RunCmd(removeAudio, "."); err != nil {
+	if err := utilsOld.RunCmd(removeAudio, "."); err != nil {
 		return err
 	}
 

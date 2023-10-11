@@ -3,7 +3,7 @@ package applicationOld
 import (
 	"fmt"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utilsOld"
 	"html/template"
 	"net/http"
 	"os"
@@ -31,7 +31,7 @@ func (app *Application) Edit(w http.ResponseWriter, r *http.Request) {
 		goto afterSplitting
 	}
 
-	if err = utils.SplitVideo(); err != nil {
+	if err = utilsOld.SplitVideo(); err != nil {
 		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/model/fsvid"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utilsOld"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -26,7 +26,7 @@ func stitchFSVids() error {
 		strings.TrimSuffix(filepath.Base(paths.FINAL_VID_PATH), ".mp4")+"_new.mp4",
 	)
 
-	err := utils.RunCmd(stitchvids, filepath.Dir(paths.FINAL_VID_PATH))
+	err := utilsOld.RunCmd(stitchvids, filepath.Dir(paths.FINAL_VID_PATH))
 	if err != nil {
 		return err
 	}

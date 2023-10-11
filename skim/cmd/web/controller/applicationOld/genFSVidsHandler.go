@@ -1,7 +1,7 @@
 package applicationOld
 
 import (
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utilsOld"
 	"net/http"
 )
 
@@ -11,7 +11,7 @@ func (app *Application) GenerateFSVid(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := utils.CombineFSVidWithTTSAudio()
+	err := utilsOld.CombineFSVidWithTTSAudio()
 	if err != nil {
 		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return

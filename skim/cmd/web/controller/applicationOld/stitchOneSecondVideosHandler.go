@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utilsOld"
 	"log"
 	"net/http"
 	"os"
@@ -38,7 +38,7 @@ func (app *Application) StitchOneSecondVideos(w http.ResponseWriter, r *http.Req
 		return
 	}
 
-	if err = utils.StitchVids(); err != nil {
+	if err = utilsOld.StitchVids(); err != nil {
 		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}

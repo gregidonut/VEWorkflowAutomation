@@ -3,7 +3,7 @@ package fsvid
 import (
 	"fmt"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utilsOld"
 	"os"
 	"os/exec"
 	"strings"
@@ -29,7 +29,7 @@ func (fsv *FSVid) CombineWithTTSAudio() error {
 		tempFileName,
 	)
 
-	if err = utils.RunCmd(CombineFSVidWithTTSCmd, "."); err != nil {
+	if err = utilsOld.RunCmd(CombineFSVidWithTTSCmd, "."); err != nil {
 		return err
 	}
 
