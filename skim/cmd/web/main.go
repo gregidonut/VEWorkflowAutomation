@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/controller/application"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/controller/applicationOld"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"log"
 	"net/http"
@@ -14,7 +14,7 @@ const (
 
 func main() {
 	mux := http.NewServeMux()
-	app, err := application.NewApplication()
+	app, err := applicationOld.NewApplication()
 	if err != nil {
 		log.Fatal(err)
 	}

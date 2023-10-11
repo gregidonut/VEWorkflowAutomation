@@ -1,4 +1,4 @@
-package application
+package applicationOld
 
 import (
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"

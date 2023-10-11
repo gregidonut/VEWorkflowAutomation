@@ -92,7 +92,7 @@ document.addEventListener("click", function (event) {
 function stitchOneSecondVids(arr) {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "/stitchOneSecondVideos", true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Content-Type', 'applicationOld/json');
     xhr.send(JSON.stringify(arr));
 }
 

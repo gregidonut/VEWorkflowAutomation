@@ -5,7 +5,7 @@ function editScript() {
 
     fetch("/editFSVidScript", {
         method: "POST", headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "applicationOld/json"
         }, body: JSON.stringify(fsVid)
     })
         .then(response => {

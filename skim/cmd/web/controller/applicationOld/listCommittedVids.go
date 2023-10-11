@@ -1,4 +1,4 @@
-package application
+package applicationOld
 
 import (
 	"encoding/json"
@@ -11,7 +11,7 @@ import (
 
 func (app *Application) ListCommittedFiles(w http.ResponseWriter, r *http.Request) {
 	var fileNames []string
-	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Content-Type", "applicationOld/json")
 
 	_, err := os.Stat(paths.RAW_COMMIT_VIDS_REL_PATH)
 	if os.IsNotExist(err) {

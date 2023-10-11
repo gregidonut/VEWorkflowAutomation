@@ -1,4 +1,4 @@
-package application
+package applicationOld
 
 import (
 	"log/slog"
@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-// Application is the main application object
+// Application is the main applicationOld object
 type Application struct {
 	Logger *slog.Logger // Assuming you have a Logger type
 }

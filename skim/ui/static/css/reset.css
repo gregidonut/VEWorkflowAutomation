@@ -16,7 +16,7 @@ body {
     font-size: 2rem;
     line-height: 1.6;
 
-    background: grey;
+    background: black;
 
     height: 100svh;
     width: 100vw;
@@ -26,8 +26,6 @@ body {
 
     align-items: center;
     justify-content: space-between;
-}
 
-h1, h2, h3, h4, h5 {
-    color: antiquewhite;
+    color: grey;
 }

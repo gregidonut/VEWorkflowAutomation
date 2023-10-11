@@ -1,48 +1,5 @@
 {{define "title"}}home{{end}}
 {{define "main"}}
-    <style>
-        form {
-            width: 700px;
-            border: 2px solid #616161;
-            border-radius: 10px;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-        }
-
-        #input-file {
-            border: 1px solid #ffffff20;
-            background-color: #ffffff10;
-            padding: 10px;
-            border-radius: 5px;
-            width: 100%;
-        }
-
-        #input-file::-webkit-file-upload-button {
-            border: none;
-            border-radius: 5px;
-            background-color: #ffffff30;
-            color: white;
-            padding: 10px 20px;
-            margin-right: 20px;
-        }
-
-        .submit-container {
-            display: flex;
-            justify-content: center;
-        }
-
-        .submit {
-            color: #d4d4d4;
-            background-color: #ffffff0a;
-            border: 1px solid #ffffff41;
-            border-radius: 5px;
-            font-size: 17px;
-            padding: 5px 15px;
-            width: fit-content;
-        }
-    </style>
     <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" id="input-file" name="filename">
         <div class="submit-container">
