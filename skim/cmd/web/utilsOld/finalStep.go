@@ -2,7 +2,7 @@ package utilsOld
 
 import (
 	"fmt"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/paths"
 	"os"
 	"path/filepath"
 )

@@ -1,7 +1,7 @@
 package application
 
 import (
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/paths"
 	"html/template"
 	"net/http"
 	"os"

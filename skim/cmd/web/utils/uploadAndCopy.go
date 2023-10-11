@@ -2,8 +2,8 @@ package utils
 
 import (
 	"fmt"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/appInterface"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/paths"
 	"io"
 	"mime/multipart"
 	"os"

@@ -2,7 +2,7 @@ package applicationOld
 
 import (
 	"encoding/json"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/paths"
 	"net/http"
 	"os"
 	"sort"

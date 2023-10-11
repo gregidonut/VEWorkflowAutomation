@@ -3,7 +3,7 @@ package applicationOld
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/paths"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utilsOld"
 	"log"
 	"net/http"

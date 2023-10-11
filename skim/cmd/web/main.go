@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/controller/application"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/paths"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/paths"
 	"log"
 	"net/http"
 )
