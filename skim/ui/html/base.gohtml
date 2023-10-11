@@ -6,18 +6,20 @@
         <meta charset="UTF-8">
         <title>skim - {{template "title" .}}</title>
         <link rel="stylesheet" href="/static/css/reset.css">
+        <link rel="stylesheet" href="/static/css/base.css">
     </head>
     <body>
 
     <header>
         <h1><a href="/">Skim</a></h1>
-        <p id="si_01"></p>
     </header>
-    <main>
-        {{template "main" .}}
-    </main>
+    {{template "main" .}}
 
     </body>
 
+    <footer>
+        <p>made with ♥️ by <a href="https://www.linkedin.com/in/gregory-babajide-v-osilaja-8158211a0/">Greg Osilaja</a>
+            | <a href="">Github</a></p>
+    </footer>
     </html>
 {{end}}
