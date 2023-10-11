@@ -4,11 +4,14 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"sync"
 )
 
 // Application is the main applicationOld object
 type Application struct {
-	Logger *slog.Logger // Assuming you have a Logger type
+	Logger                           *slog.Logger
+	copyUploadFileProgressPercentage int64
+	copyUploadFileProgressMutex      sync.Mutex
 }
 
 // HandlerFuncWrapper is needed to ultimately append and/or prepend logic to
