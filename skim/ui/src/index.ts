@@ -1,5 +1,6 @@
 const form = <HTMLFormElement>document.getElementById("upload-form");
 const uploadProgressElement = <HTMLProgressElement>document.getElementById("upload-progress");
+const copyProgressElement = <HTMLProgressElement>document.getElementById("copy-progress");
 
 form.addEventListener("submit", (e) => {
     e.preventDefault();

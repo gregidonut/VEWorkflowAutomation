@@ -45,3 +45,12 @@ main form>input {
     position: absolute;
     bottom: 6.7rem;
 }
+
+main section {
+    padding: 0 3rem;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
