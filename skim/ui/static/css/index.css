@@ -1,0 +1,47 @@
+main {
+    background: grey;
+
+    width: 66.5rem;
+    height: 41rem;
+    border-radius: 1.7rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    color: #cccccc;
+
+    position: relative;
+}
+
+main form {
+    width: 69rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+main form div {
+    width: 100%;
+    padding: 0 3.6rem;
+    height: 5rem;
+    background: #959595;
+
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: row;
+}
+
+main form div input {
+    background: #6D6D6D;
+    width: 100%;
+}
+
+main form>input {
+    position: absolute;
+    bottom: 6.7rem;
+}

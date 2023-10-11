@@ -1,9 +1,13 @@
 {{define "title"}}home{{end}}
 {{define "main"}}
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" id="input-file" name="filename">
-        <div class="submit-container">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <main>
+        <p>choose a video file</p>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div>
+                <input type="file" id="input-file" name="filename">
+            </div>
             <input class="submit" type="submit">
-        </div>
-    </form>
+        </form>
+    </main>
 {{end}}
