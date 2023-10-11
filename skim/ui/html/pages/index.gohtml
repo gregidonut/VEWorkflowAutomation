@@ -3,11 +3,18 @@
     <link rel="stylesheet" href="/static/css/index.css">
     <main>
         <p>choose a video file</p>
-        <form action="/upload" method="post" enctype="multipart/form-data">
+        <form action="/upload" method="post" enctype="multipart/form-data" id="upload-form">
             <div>
                 <input type="file" id="input-file" name="filename">
             </div>
             <input class="submit" type="submit">
         </form>
+        <div>uploading
+            <progress value="0" max="100" id="upload-progress"></progress>
+        </div>
+        <div>copying
+            <progress value="0" max="100" id="copy-progress"></progress>
+        </div>
     </main>
+    <script src="/static/dist/index.js"></script>
 {{end}}
