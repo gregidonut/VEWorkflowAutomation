@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func (app *Application) Index(w http.ResponseWriter, r *http.Request) {
+func (app *Application) IndexPage(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
@@ -16,8 +16,6 @@ func (app *Application) Index(w http.ResponseWriter, r *http.Request) {
 	app.CopyUploadFileProgressMutex.Lock()
 	app.CopyUploadFileProgressPercentage = 0
 	app.CopyUploadFileProgressMutex.Unlock()
-
-	w.Header().Set("Clear-Site-Data", `"cache"`)
 
 	_, err := os.Stat(paths.UPLOADS_PATH)
 	if !os.IsNotExist(err) {
@@ -38,6 +36,8 @@ func (app *Application) Index(w http.ResponseWriter, r *http.Request) {
 		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
+
+	w.Header().Set("Clear-Site-Data", `"cache"`)
 
 	err = ts.ExecuteTemplate(w, "base", nil)
 	if err != nil {
