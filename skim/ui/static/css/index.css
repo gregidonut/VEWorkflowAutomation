@@ -1,5 +1,5 @@
 main {
-    background: grey;
+    background: #C5C5C5;
 
     width: 66.5rem;
     height: 41rem;
@@ -53,4 +53,12 @@ main section {
     display: flex;
     flex-direction: column;
     align-items: end;
+}
+
+main section p {
+    min-width: 26rem;
+    background: #a8a8a8;
+    text-align: end;
+
+    padding: 0 1rem;
 }
