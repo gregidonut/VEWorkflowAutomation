@@ -1,0 +1,54 @@
+section#initial-timeline-section {
+    height: 100%;
+    width: 100%;
+
+    overflow-x: scroll;
+
+    display: flex;
+}
+
+section#initial-timeline-section ul {
+    list-style: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    gap: .5rem;
+
+    height: 100%;
+}
+
+section#initial-timeline-section ul li {
+    height: 100%;
+}
+
+section#initial-timeline-section ul li figure.one-second-vid-container {
+    background: #7D7D7D;
+
+    width: 12.8rem;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    position: relative;
+}
+
+section#initial-timeline-section ul li figure.one-second-vid-container figcaption {
+    position: absolute;
+    width: 100%;
+    height: 2rem;
+
+    top: .8rem;
+    background: #545454;
+
+    padding: 0 .5rem;
+}
+
+section#initial-timeline-section ul li figure.one-second-vid-container video {
+    position: absolute;
+}
+

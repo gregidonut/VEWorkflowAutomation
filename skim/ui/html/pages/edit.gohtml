@@ -3,12 +3,15 @@
     <link rel="stylesheet" href="/static/css/edit.css">
     <main>
         <div id="initial-timeline-container">
-            initial-timeline + button
+            <div>
+                <button id="stitch-one-second-vids-btn">select</button>
+            </div>
+            {{template "initialTimelineSection" .}}
         </div>
-        <section>
+        <section id="commit-vid-timeline">
             commit-vid timeline
         </section>
-        <div>
+        <div id="final-vid-container">
             final-vid + button
         </div>
     </main>
