@@ -3,6 +3,7 @@ package application
 import (
 	"errors"
 	"fmt"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/model"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils"
 	"net/http"
 )
@@ -28,6 +29,13 @@ func (app *Application) UploadFile(w http.ResponseWriter, r *http.Request) {
 		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return
 	}
+
+	m, err := model.NewModel(app)
+	if err != nil {
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
+		return
+	}
+	app.model = m
 
 	http.Redirect(w, r, "/static", http.StatusSeeOther)
 }

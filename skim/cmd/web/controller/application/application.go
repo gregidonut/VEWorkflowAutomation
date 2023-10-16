@@ -1,6 +1,7 @@
 package application
 
 import (
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/model"
 	"log/slog"
 	"net/http"
 	"os"
@@ -32,6 +33,7 @@ type Application struct {
 	Logger                           *slog.Logger
 	CopyUploadFileProgressPercentage int64
 	CopyUploadFileProgressMutex      sync.Mutex
+	model                            *model.Model
 }
 
 func (app *Application) NewHandlerFunc(
