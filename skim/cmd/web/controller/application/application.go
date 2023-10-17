@@ -83,6 +83,10 @@ func (app *Application) Warning(msg string) {
 	app.Logger.Warn(msg)
 }
 
+func (app *Application) Error(msg string) {
+	app.Logger.Error(msg)
+}
+
 func (app *Application) CpUploadFileProgressPercentage(percentage int64) int64 {
 	app.CopyUploadFileProgressMutex.Lock()
 	app.CopyUploadFileProgressPercentage = percentage

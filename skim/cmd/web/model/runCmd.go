@@ -48,7 +48,7 @@ func (m *Model) RunCmd(cmd *exec.Cmd) (string, error) {
 		for errScanner.Scan() {
 			line := errScanner.Text()
 			// Process the line of stderr here
-			m.app.Debug(line)
+			m.app.Error(line)
 		}
 	}()
 
