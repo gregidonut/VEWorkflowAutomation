@@ -17,6 +17,7 @@ type Model struct {
 	UploadedVidLengthInSeconds int
 	app                        appInterface.AppInterface
 	OSVids                     []*osvid.OSVid
+	OSVidsComplete             bool
 }
 
 func NewModel(app appInterface.AppInterface) (*Model, error) {

@@ -3,7 +3,7 @@ const uploadProgressElement = <HTMLProgressElement>document.getElementById("uplo
 const copyProgressElement = <HTMLProgressElement>document.getElementById("copy-progress");
 
 let intervalId: NodeJS.Timeout;
-form.addEventListener("submit", (e) => {
+form.addEventListener("submit", () => {
     const xhr = new XMLHttpRequest();
 
     xhr.upload.addEventListener("progress", (event) => {

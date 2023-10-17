@@ -52,3 +52,22 @@ section#initial-timeline-section ul li figure.one-second-vid-container video {
     position: absolute;
 }
 
+
+section#initial-timeline-section ul li figure.spinner{
+    background: none;
+}
+
+section#initial-timeline-section ul li figure.one-second-vid-container img{
+    width: 70%;
+    padding: 2rem;
+    animation: spin 3s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

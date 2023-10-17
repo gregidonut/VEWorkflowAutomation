@@ -59,11 +59,14 @@ func (m *Model) GenInitialOSVids() error {
 	}
 
 	initialVidsNumber := m.UploadedVidLengthInSeconds
+	m.OSVidsComplete = true
 	m.app.Info(fmt.Sprintf("assigning initial number of videos to be split: %d", initialVidsNumber))
 	if m.UploadedVidLengthInSeconds > INITIAL_NUMBER_OF_DISPLAYED_VIDS {
+		m.OSVidsComplete = false
 		m.app.Info(fmt.Sprintf("changed initial number of videos to be split: %d", INITIAL_NUMBER_OF_DISPLAYED_VIDS))
 		initialVidsNumber = INITIAL_NUMBER_OF_DISPLAYED_VIDS
 	}
+	m.app.Info(fmt.Sprintf("OSVids complete?: %v", m.OSVidsComplete))
 
 	var eg errgroup.Group
 	for i := 0; i < initialVidsNumber; i++ {
