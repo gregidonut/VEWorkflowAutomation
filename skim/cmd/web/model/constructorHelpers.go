@@ -2,6 +2,7 @@ package model
 
 import (
 	"fmt"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/model/osvid"
 	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/paths"
 	"golang.org/x/sync/errgroup"
 	"os"
@@ -64,6 +65,14 @@ func (m *Model) GenInitialOSVids() error {
 	for i := 0; i < initialVidsNumber; i++ {
 		outputPath := filepath.Join(paths.SPLITVIDS_REL_PATH, fmt.Sprintf("output_%06d.mp4", i))
 		timeStamp := fmt.Sprintf("00:00:%02d", i)
+
+		m.app.Info(fmt.Sprintf("constructing osvid record for %s, for timestamp %s", outputPath, timeStamp))
+		osv, err := osvid.NewOSVid(outputPath, timeStamp)
+		if err != nil {
+			return err
+		}
+		m.app.Info(fmt.Sprintf("appending osvid record to model field for %s, for timestamp %s", outputPath, timeStamp))
+		m.OSVids = append(m.OSVids, osv)
 
 		eg.Go(func() error {
 			m.app.Info(fmt.Sprintf("spawning go routine for %s, for timestamp %s", outputPath, timeStamp))

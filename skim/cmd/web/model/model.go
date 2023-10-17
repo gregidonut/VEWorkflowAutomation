@@ -1,12 +1,13 @@
 package model
 
 import (
-    "fmt"
-    "github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/appInterface"
-    "github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/paths"
-    "os"
-    "path/filepath"
-    "strings"
+	"fmt"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/model/osvid"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/appInterface"
+	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/paths"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
 // Model is responsible for wrapping all the model objects so that they
@@ -15,6 +16,7 @@ type Model struct {
 	UploadedVidPath            string
 	UploadedVidLengthInSeconds int
 	app                        appInterface.AppInterface
+	OSVids                     []*osvid.OSVid
 }
 
 func NewModel(app appInterface.AppInterface) (*Model, error) {
