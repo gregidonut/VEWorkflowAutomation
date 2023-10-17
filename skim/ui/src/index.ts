@@ -1,10 +1,13 @@
-import IndexPage from "/static/dist/indexPage.js";
-import EditPage from "/static/dist/editPage.js";
+import IndexPage from "./indexPage.js";
+import EditPage from "./editPage.js";
 
-if (window.location.pathname == "/") {
-    IndexPage();
-}
+type PageRegistry = {
+    [route: string]: () => void;
+};
+const pageRegistry: PageRegistry = { "/": IndexPage, "/edit": EditPage };
 
-if (window.location.pathname == "/edit") {
-    EditPage();
+for (const [route, fn] of Object.entries(pageRegistry)) {
+    if (window.location.pathname == route) {
+        fn();
+    }
 }
