@@ -5,12 +5,20 @@
             {{ range . }}
                 <li>
                     <figure class="one-second-vid-container">
-                        <video width="128" controls>
-                            <source src="movie.mp4" type="video/mp4">
+                        <video
+                            width="128"
+                            muted
+                            autoplay
+                            loop
+                        >
+                            <source
+                                src="/static/uploads/splitVids/{{ .VBasePath }}?TIMESTAMP={{ .LastModified }}"
+                                type="video/mp4"
+                            >
                             Your browser does not support the video tag.
                         </video>
                         <figcaption>
-                            {{ .Video }}
+                            {{ .TimeStampFromUploadedVid }}
                         </figcaption>
                     </figure>
                 </li>

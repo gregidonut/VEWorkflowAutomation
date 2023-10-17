@@ -1,7 +1,6 @@
 package application
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 )
@@ -30,14 +29,7 @@ func (app *Application) EditPage(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Clear-Site-Data", `"cache"`)
 
-	var data []templateData
-	for i := 0; i < 30; i++ {
-		data = append(data, templateData{
-			Video: fmt.Sprintf("ina_mo_%d.mp4", i),
-		})
-	}
-
-	err = ts.ExecuteTemplate(w, "base", data)
+	err = ts.ExecuteTemplate(w, "base", app.model.OSVids)
 	if err != nil {
 		app.catchHandlerErr(w, err, http.StatusInternalServerError)
 		return

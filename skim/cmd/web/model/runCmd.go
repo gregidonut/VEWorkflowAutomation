@@ -52,6 +52,7 @@ func (m *Model) RunCmd(cmd *exec.Cmd) (string, error) {
 		}
 	}()
 
+	m.app.Info(fmt.Sprintf("running command: '%s'", cmd))
 	err = cmd.Start()
 	if err != nil {
 		return "", err

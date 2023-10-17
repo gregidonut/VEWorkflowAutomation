@@ -37,5 +37,5 @@ func (app *Application) UploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 	app.model = m
 
-	http.Redirect(w, r, "/static", http.StatusSeeOther)
+	http.Redirect(w, r, "/edit", http.StatusSeeOther)
 }

@@ -4,8 +4,6 @@ const copyProgressElement = <HTMLProgressElement>document.getElementById("copy-p
 
 let intervalId: NodeJS.Timeout;
 form.addEventListener("submit", (e) => {
-    e.preventDefault();
-
     const xhr = new XMLHttpRequest();
 
     xhr.upload.addEventListener("progress", (event) => {

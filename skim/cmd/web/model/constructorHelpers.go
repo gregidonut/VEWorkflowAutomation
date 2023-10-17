@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -66,14 +67,6 @@ func (m *Model) GenInitialOSVids() error {
 		outputPath := filepath.Join(paths.SPLITVIDS_REL_PATH, fmt.Sprintf("output_%06d.mp4", i))
 		timeStamp := fmt.Sprintf("00:00:%02d", i)
 
-		m.app.Info(fmt.Sprintf("constructing osvid record for %s, for timestamp %s", outputPath, timeStamp))
-		osv, err := osvid.NewOSVid(outputPath, timeStamp)
-		if err != nil {
-			return err
-		}
-		m.app.Info(fmt.Sprintf("appending osvid record to model field for %s, for timestamp %s", outputPath, timeStamp))
-		m.OSVids = append(m.OSVids, osv)
-
 		eg.Go(func() error {
 			m.app.Info(fmt.Sprintf("spawning go routine for %s, for timestamp %s", outputPath, timeStamp))
 			ffmpegCmd := exec.Command(
@@ -85,21 +78,39 @@ func (m *Model) GenInitialOSVids() error {
 				"-t",
 				"1.0",
 				"-an",
+				"-vf",
+				"scale=360:trunc(ow/a/2)*2,setsar=1",
 				"-c:v",
-				"copy",
+				"libx264",
+				"-crf",
+				"22",
 				outputPath,
 			)
 			_, err = m.RunCmd(ffmpegCmd)
 			if err != nil {
 				return err
 			}
+
+			m.app.Info(fmt.Sprintf("constructing osvid record for %s, for timestamp %s", outputPath, timeStamp))
+			osv, err := osvid.NewOSVid(outputPath, timeStamp)
+			if err != nil {
+				return err
+			}
+			m.app.Info(fmt.Sprintf("appending osvid record to model field for %s, for timestamp %s", outputPath, timeStamp))
+			m.OSVids = append(m.OSVids, osv)
+
 			return nil
 		})
 	}
+
 	m.app.Info("finished spawning goroutines for initial split vids!")
 	if err = eg.Wait(); err != nil {
 		return err
 	}
+
+	sort.Slice(m.OSVids, func(i, j int) bool {
+		return m.OSVids[i].TimeStampFromUploadedVid < m.OSVids[j].TimeStampFromUploadedVid
+	})
 
 	return nil
 }
