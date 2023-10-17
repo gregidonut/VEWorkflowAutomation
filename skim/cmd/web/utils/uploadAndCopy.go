@@ -8,6 +8,7 @@ import (
 	"mime/multipart"
 	"os"
 	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 )
@@ -19,9 +20,13 @@ func UploadAndCopy(sourceMPF multipart.File, header *multipart.FileHeader, app a
 			return err
 		}
 	} else if err != nil {
+		if strings.Contains(err.Error(), "file exists") {
+			goto createFile
+		}
 		return err
 	}
 
+createFile:
 	// Create a new file with the same name as the original filename in the upload directory
 	newEmptyFile, err := os.Create(filepath.Join(paths.UPLOADS_PATH, header.Filename))
 	if err != nil {
@@ -58,7 +63,6 @@ func copyWithProgress(sourceMPF multipart.File, sourceFileSize int64, targetFile
 
 			progressMutex.Lock()
 			app.Info(fmt.Sprintf("Copying... %d bytes", bytesRead))
-
 			appFileProgress := app.CpUploadFileProgressPercentage(int64(float64(bytesRead) / float64(sourceFileSize) * 100))
 			app.Info(fmt.Sprintf("copy progress: %d%%", appFileProgress))
 

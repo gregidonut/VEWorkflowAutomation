@@ -17,13 +17,10 @@ func (app *Application) IndexPage(w http.ResponseWriter, r *http.Request) {
 	app.CopyUploadFileProgressPercentage = 0
 	app.CopyUploadFileProgressMutex.Unlock()
 
-	_, err := os.Stat(paths.UPLOADS_PATH)
-	if !os.IsNotExist(err) {
-		err = os.RemoveAll(paths.UPLOADS_PATH)
-		if err != nil {
-			app.catchHandlerErr(w, err, http.StatusInternalServerError)
-			return
-		}
+	err := os.RemoveAll(paths.UPLOADS_PATH)
+	if err != nil {
+		app.catchHandlerErr(w, err, http.StatusInternalServerError)
+		return
 	}
 
 	files := []string{
