@@ -1,12 +1,12 @@
 package model
 
 import (
-	"fmt"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/appInterface"
-	"github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/paths"
-	"os"
-	"path/filepath"
-	"strings"
+    "fmt"
+    "github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/appInterface"
+    "github.com/gregidonut/VEWorkflowAutomation/skim/cmd/web/utils/paths"
+    "os"
+    "path/filepath"
+    "strings"
 )
 
 // Model is responsible for wrapping all the model objects so that they
@@ -19,7 +19,7 @@ type Model struct {
 
 func NewModel(app appInterface.AppInterface) (*Model, error) {
 	app.Debug("creating application model..")
-	app.Debug("finished creating application model!")
+	defer app.Debug("finished creating application model!")
 
 	payload := new(Model)
 	payload.app = app
@@ -48,8 +48,11 @@ func NewModel(app appInterface.AppInterface) (*Model, error) {
 	if err = payload.ProbeForUploadedVidLength(); err != nil {
 		return payload, err
 	}
-
 	app.Info(fmt.Sprintf("length of uploaded video in seconds: %d", payload.UploadedVidLengthInSeconds))
+
+	if err = payload.GenInitialOSVids(); err != nil {
+		return payload, err
+	}
 
 	return payload, nil
 }
