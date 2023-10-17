@@ -11,7 +11,10 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
+
+const INITIAL_NUMBER_OF_DISPLAYED_VIDS = 90
 
 func (m *Model) ProbeForUploadedVidLength() error {
 	m.app.Info("probing for upload vid length")
@@ -57,15 +60,15 @@ func (m *Model) GenInitialOSVids() error {
 
 	initialVidsNumber := m.UploadedVidLengthInSeconds
 	m.app.Info(fmt.Sprintf("assigning initial number of videos to be split: %d", initialVidsNumber))
-	if m.UploadedVidLengthInSeconds > 30 {
+	if m.UploadedVidLengthInSeconds > INITIAL_NUMBER_OF_DISPLAYED_VIDS {
 		m.app.Info(fmt.Sprintf("changed initial number of videos to be split: %d", 29))
-		initialVidsNumber = 29
+		initialVidsNumber = INITIAL_NUMBER_OF_DISPLAYED_VIDS
 	}
 
 	var eg errgroup.Group
 	for i := 0; i < initialVidsNumber; i++ {
 		outputPath := filepath.Join(paths.SPLITVIDS_REL_PATH, fmt.Sprintf("output_%06d.mp4", i))
-		timeStamp := fmt.Sprintf("00:00:%02d", i)
+		timeStamp := formatDuration(time.Duration(i) * time.Second)
 
 		eg.Go(func() error {
 			m.app.Info(fmt.Sprintf("spawning go routine for %s, for timestamp %s", outputPath, timeStamp))
@@ -113,4 +116,12 @@ func (m *Model) GenInitialOSVids() error {
 	})
 
 	return nil
+}
+
+func formatDuration(duration time.Duration) string {
+	hours := int(duration.Hours())
+	minutes := int(duration.Minutes()) % 60
+	seconds := int(duration.Seconds()) % 60
+
+	return fmt.Sprintf("%02d:%02d:%02d", hours, minutes, seconds)
 }
