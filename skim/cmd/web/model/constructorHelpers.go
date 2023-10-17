@@ -14,8 +14,6 @@ import (
 	"time"
 )
 
-const INITIAL_NUMBER_OF_DISPLAYED_VIDS = 90
-
 func (m *Model) ProbeForUploadedVidLength() error {
 	m.app.Info("probing for upload vid length")
 	defer m.app.Info("finished probing for upload vid length")
@@ -44,6 +42,8 @@ func (m *Model) ProbeForUploadedVidLength() error {
 	return nil
 }
 
+const INITIAL_NUMBER_OF_DISPLAYED_VIDS = 30
+
 func (m *Model) GenInitialOSVids() error {
 	m.app.Info("generating initial vids")
 	defer m.app.Info("finished generating initial vids")
@@ -61,7 +61,7 @@ func (m *Model) GenInitialOSVids() error {
 	initialVidsNumber := m.UploadedVidLengthInSeconds
 	m.app.Info(fmt.Sprintf("assigning initial number of videos to be split: %d", initialVidsNumber))
 	if m.UploadedVidLengthInSeconds > INITIAL_NUMBER_OF_DISPLAYED_VIDS {
-		m.app.Info(fmt.Sprintf("changed initial number of videos to be split: %d", 29))
+		m.app.Info(fmt.Sprintf("changed initial number of videos to be split: %d", INITIAL_NUMBER_OF_DISPLAYED_VIDS))
 		initialVidsNumber = INITIAL_NUMBER_OF_DISPLAYED_VIDS
 	}
 
